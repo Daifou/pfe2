@@ -20,11 +20,11 @@ require('dotenv').config();
 
 
 const db = mysql.createConnection({
-    host: 'db4free.net',
-    user: 'daifou',
-    password: 'daifoupfe',
+    host: 'localhost',
+    user: 'root',
+    password: '',
     // password: 'DaifouHkt26062003',
-    database: 'pfeimmobile'
+    database: 'pfe_immobile'
 });
 
 db.connect((err) => {
