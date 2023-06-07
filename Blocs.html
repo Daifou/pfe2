@@ -633,67 +633,61 @@
         <button class="close-button">x</button>
         <div class="medium-square">
             <div class="left-elements">
-                <div class="num">N°: 01</div>
-                <div class="f">F3 3</div>
-                <div class="surface">123 m²</div>
-                <div class="lot">LOT</div>
+              <div class="num">N°: 01</div>
+              <div class="f">F3 3</div>
+              <div class="surface" contenteditable>123 m²</div>
+              <div class="lot" contenteditable>LOT</div>
             </div>
             <div class="right-elements">
-                <div class="newcylinder1" onclick="showMediumDiv(1)">
-                    <span class="left-text">Commende</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder2">
-                    <span class="left-text">Fondation</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder3">
-                    <span class="left-text">Break + Biton</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder4">
-                    <span class="left-text">Finie</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder5">
-                    <span class="left-text">Cle</span>
-                    <span class="right-text">20%</span>
-                </div>
+              <div class="newcylinder1" onclick="showMediumDiv(0)">
+                <span class="left-text">Commende</span>
+                <span class="right-text">20%</span>
+              </div>
+              <div class="newcylinder2" onclick="showMediumDiv(1)">
+                <span class="left-text">Fondation</span>
+                <span class="right-text">20%</span>
+              </div>
+              <div class="newcylinder3" onclick="showMediumDiv(2)">
+                <span class="left-text">Break + Biton</span>
+                <span class="right-text">20%</span>
+              </div>
+              <div class="newcylinder4" onclick="showMediumDiv(3)">
+                <span class="left-text">Finie</span>
+                <span class="right-text">20%</span>
+              </div>
+              <div class="newcylinder5" onclick="showMediumDiv(4)">
+                <span class="left-text">Cle</span>
+                <span class="right-text">20%</span>
+              </div>
             </div>
-
-        </div>
-        <div class="medium-square">
+          </div>
+          <div class="medium-square">
             <div class="left-elements">
-                <div class="num">N°: 01</div>
-                <div class="f">F3 3</div>
-                <div class="surface">123 m²</div>
-                <div class="lot">LOT</div>
+              <div class="num">N°: 01</div>
+              <select class="f">
+                <option value="F2">F2</option>
+                <option value="F3" selected>F3</option>
+                <option value="F4">F4</option>
+                <option value="F5">F5</option>
+              </select>
+              <div class="surface">123 m²</div>
+              <div class="lot">LOT</div>
             </div>
             <div class="right-elements">
-                <div id="newcylinder1" onclick="showMediumDiv(1)">
-                    <span class="left-text">Commende</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder2">
-                    <span class="left-text">Fondation</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder3">
-                    <span class="left-text">Break + Biton</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder4">
-                    <span class="left-text">Finie</span>
-                    <span class="right-text">20%</span>
-                </div>
-                <div class="newcylinder5">
-                    <span class="left-text">Cle</span>
-                    <span class="right-text">20%</span>
-                </div>
+              <div class="label">Label:</div>
+              <input type="text" class="input-field">
             </div>
+          </div>
         </div>
-
-    </div>
+      </div>
+      
+      <div id="mediumDiv" style="display: none;">
+        <div class="circle">A</div>
+        <h3 class="name">Abass A</h3>
+        <div class="price">Prix: 150000</div>
+        <div class="paid">Payé: 120000 DA</div>
+        <div class="remaining">Rest: 30000</div>
+      </div>
     <div id="mediumDiv" style="display: none;">
         <div class="circle">A</div>
         <h3 class="name">Abass A</h3>
@@ -706,18 +700,60 @@
 
         function showMediumDiv(cylinderNumber) {
             var mediumDiv = document.getElementById("mediumDiv");
-            var circleDiv = mediumDiv.querySelector(".circle");
-            var cylinderDiv = document.getElementById("newcylinder" + cylinderNumber);
-
-            // Update the letter inside the circle
-            var letter = cylinderDiv.textContent;
-            circleDiv.textContent = "A";
-
-            // Update the rest of the content
-            // ...
-
+          
+            // Update the content in the mediumDiv based on the cylinderNumber
+            if (cylinderNumber === 0) {
+              mediumDiv.innerHTML = `
+                <div class="circle">A</div>
+                <h3 class="name">Abass A</h3>
+                <div class="price">Prix: 150000</div>
+                <div class="paid">Payé: 120000 DA</div>
+                <div class="remaining">Rest: 30000</div>
+              `;
+            } else if (cylinderNumber === 1) {
+              mediumDiv.innerHTML = `
+                <div class="circle">A</div>
+                <h3 class="name">Abass B</h3>
+                <div class="price">Prix: 180000</div>
+                <div class="paid">Payé: 140000 DA</div>
+                <div class="remaining">Rest: 40000</div>
+              `;
+            } else if (cylinderNumber === 2) {
+              mediumDiv.innerHTML = `
+                <div class="circle">A</div>
+                <h3 class="name">Abass C</h3>
+                <div class="price">Prix: 200000</div>
+                <div class="paid">Payé: 160000 DA</div>
+                <div class="remaining">Rest: 40000</div>
+              `;
+            } else if (cylinderNumber === 3) {
+              mediumDiv.innerHTML = `
+                <div class="circle">A</div>
+                <h3 class="name">Abass D</h3>
+                <div class="price">Prix: 220000</div>
+                <div class="paid">Payé: 180000 DA</div>
+                <div class="remaining">Rest: 40000</div>
+              `;
+            } else if (cylinderNumber === 4) {
+              mediumDiv.innerHTML = `
+                <div class="circle">A</div>
+                <h3 class="name">Abass E</h3>
+                <div class="price">Prix: 240000</div>
+                <div class="paid">Payé: 200000 DA</div>
+                <div class="remaining">Rest: 40000</div>
+              `;
+            } else if (cylinderNumber === 5) {
+              mediumDiv.innerHTML = `
+                <div class="circle">A</div>
+                <h3 class="name">Abass F</h3>
+                <div class="price">Prix: 260000</div>
+                <div class="paid">Payé: 220000 DA</div>
+                <div class="remaining">Rest: 40000</div>
+              `;
+            }
+          
             mediumDiv.style.display = "block";
-        }
+          }
         document.querySelector(".close-button").addEventListener("click", function () {
             var element = document.querySelector(".big-div");
             element.style.display = "none"; // Hide the element

@@ -3,6 +3,8 @@
 
 <head>
     <title>Home Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -242,7 +244,7 @@
 
         .form-container form input:focus,
         .form-container form button:focus {
-            background: linear-gradient(to bottom right, white, #EEF30F);
+            background-color: white;
 
         }
 
@@ -259,10 +261,11 @@
         .form-container form input[type="text"]:focus,
         .form-container form input[type="tel"]:focus {
             background-color: white;
-            background: linear-gradient(to bottom right, white, #EEF30F);
+            background-color: white;
         }
 
-        .form-container form button {
+        .submit,
+        .appartement-validation {
             padding: 10px 20px;
             background-color: #EEF30F;
             border: none;
@@ -370,14 +373,13 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px;
-            height: 600px;
+            width: 700px;
+            height: 529px;
             z-index: 1000;
 
         }
 
-        .form-container3 .form {
-            background-color: white;
+        .form-container3 form {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -392,13 +394,47 @@
             border: black 2px solid;
             width: 100%;
             height: 100%;
+            background-color: rgba(255, 255, 255, 0.719);
         }
 
-        .form-container3 .form input,
-        .form-container3 .form button {
+        .form-container3 form input,
+        .form-container3 form textarea {
             transition: background-color 0.3s ease;
             border: #000 2px solid;
             border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.719);
+        }
+
+        .select-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            margin: 20px 0;
+            gap: 10px;
+        }
+
+        .select-container label {
+            margin-right: 10px;
+        }
+
+        .select-container select {
+            border: 2px solid #000;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container label {
+            margin-right: 5px;
         }
     </style>
 
@@ -407,7 +443,11 @@
 <body>
     <div class="container">
         <header class="header">
-            <div class="logo"><img src="logologin.png" alt="Logo"></div>
+            <div class="logo">
+                <a href="home.html">
+                    <img src="logologin.png" alt="Logo">
+                </a>
+            </div>
             <div class="menu-items">
                 <div onclick="window.location.href = 'Projets.html';">Projects</div>
                 <div onclick="window.location.href = 'clients.html';">Clients</div>
@@ -434,6 +474,7 @@
     <img src="background.png" alt="Background Image" class="animated-image">
 
     <div class="form-container">
+        <form>
             <label for="nom">Nom:</label>
             <input type="text" id="nom" name="nom" required>
             <label for="prenom">Prénom:</label>
@@ -451,7 +492,8 @@
                 <label for="potentiel">Potentiel:</label>
                 <input type="radio" id="potentiel" name="statut" value="potentiel">
             </div>
-            <button type="submit">Submit</button>
+            <button class="submit" type="submit">Submit</button>
+        </form>
     </div>
     <div class="form-container2">
         <form>
@@ -466,218 +508,362 @@
                 <label for="radio3">Parking</label>
             </div>
         </form>
-
-        <div id="form1" class="form-container3">
-            <div class="form">
-                <label for="nom">Nom de projet:</label>
-                <input type="text" id="nom-projet" name="nom" required>
-                <label for="description">Description:</label>
-                <textarea style="border: #000 solid 2px;" id="description" name="description" rows="7"
-                    cols="50"></textarea>
-                <label for="documents">Documents:</label>
-                <input style="width: 100%;" type="file" id="documents" name="documents" multiple>
+    </div>
+    <div id="form1" class="form-container3">
+        <form>
+            <label for="nom">Nom de projet:</label>
+            <input type="text" id="nom" name="nom" required>
+            <label for="description">Description:</label>
+            <textarea style="border: #000 solid 2px;" id="description" name="description" rows="7" cols="50"></textarea>
+            <label for="documents">Documents:</label>
+            <input style="width: 100%; height: 100px" type="file" id="documents" name="documents" multiple>
+            <div class="select-container">
                 <label for="number">n° de Blocs:</label>
-                <select style="border: #000 solid 2px;" id="nbr_bloc" name="nbr_bloc">
+                <select style="border: #000 solid 2px;" id="number" name="nbr_bloc">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
+                    <option value="3">4</option>
+                    <option value="3">5</option>
+                    <option value="3">6</option>
+                    <option value="3">7</option>
+                    <option value="3">8</option>
+                    <option value="20">9</option>
+                    <option value="20">10</option>
+                    <option value="20">11</option>
+                    <option value="20">12</option>
+                    <option value="20">13</option>
+                    <option value="20">14</option>
+                    <option value="20">15</option>
+                    <option value="20">16</option>
+                    <option value="20">17</option>
+                    <option value="20">18</option>
+                    <option value="20">19</option>
                     <option value="20">20</option>
                     <option value="20">21</option>
                 </select>
+
                 <label for="number">n° d'etages:</label>
-                <select style="border: #000 solid 2px;" id="nbr-etage" name="nbr-etage">
+                <select style="border: #000 solid 2px;" id="number" name="nbr-etage">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
+                    <option value="3">4</option>
+                    <option value="3">5</option>
+                    <option value="3">6</option>
+                    <option value="3">7</option>
+                    <option value="3">8</option>
+                    <option value="20">9</option>
+                    <option value="20">10</option>
+                    <option value="20">11</option>
+                    <option value="20">12</option>
+                    <option value="20">13</option>
+                    <option value="20">14</option>
+                    <option value="20">15</option>
+                    <option value="20">16</option>
+                    <option value="20">17</option>
+                    <option value="20">18</option>
+                    <option value="20">19</option>
                     <option value="20">20</option>
                     <option value="20">21</option>
                 </select>
 
                 <label for="number">n° d'Appartement:</label>
-                <select style="border: #000 solid 2px;" id="nbr-appart" name="nbr-appart">
+                <select style="border: #000 solid 2px;" id="number" name="nbr-appart">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
+                    <option value="3">4</option>
+                    <option value="3">5</option>
+                    <option value="3">6</option>
+                    <option value="3">7</option>
+                    <option value="3">8</option>
+                    <option value="20">9</option>
+                    <option value="20">10</option>
+                    <option value="20">11</option>
+                    <option value="20">12</option>
+                    <option value="20">13</option>
+                    <option value="20">14</option>
+                    <option value="20">15</option>
+                    <option value="20">16</option>
+                    <option value="20">17</option>
+                    <option value="20">18</option>
+                    <option value="20">19</option>
                     <option value="20">20</option>
                     <option value="20">21</option>
                 </select>
-                <input type="button" class="appartement-validation" value="Valide">
             </div>
+            <div class="select-container">
+                <div class="input-group">
+                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                        placeholder="F2" />
+                    <span class="currency-symbol">DA</span>
                 </div>
-
-        <div id="form2" class="form-container3">
-            <form>
-                <!-- Add your Commercial form fields here -->
-            </form>
-        </div>
-
-        <div id="form3" class="form-container3">
-            <form>
-                <!-- Add your Parking form fields here -->
-            </form>
-        </div>
-        <h2>Activités récentes</h2>
-        <div class="tables-container">
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th class="separator">Projet1</th>
-                    </tr>
-                    <tr>
-                        <td>Description1</td>
-                    </tr>
-                </table>
+                <div class="input-group">
+                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                        placeholder="F3" />
+                    <span class="currency-symbol">DA</span>
+                </div>
             </div>
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th class="separator">Projet2</th>
-                    </tr>
-                    <tr>
-                        <td>Description2</td>
-                    </tr>
-                </table>
+
+            <div class="select-container">
+                <div class="input-group">
+                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                        placeholder="F4" />
+                    <span class="currency-symbol">DA</span>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                        placeholder="F5" />
+                    <span class="currency-symbol">DA</span>
+                </div>
             </div>
+            <button type="submit" class="appartement-validation" value="Valide">Submit</button>
+
+        </form>
+    </div>
+
+    
+    <div id="form2" class="form-container3">
+        <form>
+            <div id="formsContainer">
+                <div class="grid-container">
+                    <div class="input-container">
+                        <label for="widthInput">Width (m²):</label>
+                        <input type="text" id="widthInput" name="width" placeholder="Width (m²)" />
+                    </div>
+                    <div class="input-container">
+                        <label for="heightInput">Height (m²):</label>
+                        <input type="text" id="heightInput" name="height" placeholder="Height (m²)" />
+                    </div>
+                    <div class="input-container">
+                        <label for="amountInput">Amount:</label>
+                        <input type="text" id="amountInput" name="amount" onkeyup="formatMoneyInput(this)" pattern="\d*" placeholder="Amount" />
+                    </div>
+                    <div class="input-container">
+                        <label for="numberInput">number</label>
+                        <select id="numberInput" name="nbr-comm">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button style="border: none; background-color:#EEF30F; border:#000 solid 2px;" id="addlocal">Add local</button>
+        </form>
+    </div>
+    <div id="form3" class="form-container3">
+        <form>
+            <div class="select-container">
+                <div id="parkingPlaces">
+                    <div>
+                        <label for="number">n° place Parking:</label>
+                        <select style="border: #000 solid 2px;" id="number" name="nbr-parking">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
+                        <input type="text" id="nameInput" name="name" placeholder="Ajoute un client" />
+                    </div>
+                </div>
+                <input style="width: 100px;" type="text" id="amountInput" name="amount" onkeyup="formatMoneyInput(this)"
+                    pattern="\d*" placeholder="Prix" />
+            </div>
+            <button
+                style="border: none; background-color:#EEF30F; border:#000 solid 2px; padding: 3px 8px; border-radius:6px; font-weight:700;"
+                id="addParkingButton">Add Parking Place</button>
+        </form>
+    </div>
+    <h2>Activités récentes</h2>
+    <div class="tables-container">
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th class="separator">Projet1</th>
+                </tr>
+                <tr>
+                    <td>Description1</td>
+                </tr>
+            </table>
         </div>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th class="separator">Projet2</th>
+                </tr>
+                <tr>
+                    <td>Description2</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 
-        <script>
-            const button1 = document.querySelector('.button1');
-            const button2 = document.querySelector('.button2');
-            const formContainer = document.querySelector('.form-container');
-            const formContainer2 = document.querySelector('.form-container2');
+    <script>
 
-            button1.addEventListener('click', () => {
-                formContainer.style.display = 'flex';
-            });
+        function formatMoneyInput(input) {
+            // Your formatMoneyInput code here
+        }
 
-            button2.addEventListener('click', () => {
-                formContainer2.style.display = 'flex';
-            });
-
-            formContainer.addEventListener('submit', (event) => {
+        $(document).ready(function() {
+            $("#addlocal").on("click", function(event) {
                 event.preventDefault();
-                formContainer.style.display = 'none';
+                var width = $("#widthInput").val();
+                var height = $("#heightInput").val();
+                var amount = $("#amountInput").val();
+                var numberOfClients = $("#numberInput").val();
+                var name = $("#nameInput").val();
+
+                console.log("Width:", width);
+                console.log("Height:", height);
+                console.log("Amount:", amount);
+                console.log("Number of Clients:", numberOfClients);
+                console.log("Name:", name);
             });
-            formContainer2.addEventListener('submit', (event) => {
-                event.preventDefault();
-                formContainer2.style.display = 'none';
+        });
+
+        document.getElementById("addParkingButton").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            var parkingPlacesContainer = document.getElementById("parkingPlaces");
+            var firstParkingPlace = parkingPlacesContainer.firstElementChild;
+            var newParkingPlace = firstParkingPlace.cloneNode(true);
+            newParkingPlace.querySelector("input").value = "";
+
+            // Get the selected numbers in the existing parking places
+            var selectedNumbers = Array.from(parkingPlacesContainer.querySelectorAll("select")).map(function (select) {
+                return select.value;
             });
 
-            const musicPlayer = document.getElementById('music-player');
-            const musicPlayerIcon = document.querySelector('.music-player-icon');
-
-            musicPlayerIcon.addEventListener('click', () => {
-                if (musicPlayer.paused) {
-                    musicPlayer.play();
-                    musicPlayerIcon.classList.add('fa-pause');
-                    musicPlayerIcon.classList.remove('fa-play');
+            // Remove already selected numbers from the new parking place options
+            var options = newParkingPlace.querySelectorAll("option");
+            options.forEach(function (option) {
+                if (selectedNumbers.includes(option.value)) {
+                    option.disabled = true;
                 } else {
-                    musicPlayer.pause();
-                    musicPlayerIcon.classList.add('fa-play');
-                    musicPlayerIcon.classList.remove('fa-pause');
+                    option.disabled = false;
                 }
             });
-            function showForm(formNumber) {
-                // Hide all form containers
-                const formContainers = document.querySelectorAll('.form-container3');
-                formContainers.forEach(container => {
-                    container.style.display = 'none';
-                });
 
-                // Show the selected form container
-                const selectedForm = document.getElementById(`form${formNumber}`);
-                selectedForm.style.display = 'block';
+            parkingPlacesContainer.appendChild(newParkingPlace);
+        });
+        const button1 = document.querySelector('.button1');
+        const button2 = document.querySelector('.button2');
+        const formContainer = document.querySelector('.form-container');
+        const formContainer2 = document.querySelector('.form-container2');
+
+        button1.addEventListener('click', () => {
+            formContainer.style.display = 'flex';
+        });
+
+        button2.addEventListener('click', () => {
+            formContainer2.style.display = 'flex';
+        });
+
+        formContainer.addEventListener('submit', (event) => {
+            event.preventDefault();
+            formContainer.style.display = 'none';
+        });
+        formContainer2.addEventListener('submit', (event) => {
+            event.preventDefault();
+            formContainer2.style.display = 'none';
+        });
+
+        const musicPlayer = document.getElementById('music-player');
+        const musicPlayerIcon = document.querySelector('.music-player-icon');
+
+        musicPlayerIcon.addEventListener('click', () => {
+            if (musicPlayer.paused) {
+                musicPlayer.play();
+                musicPlayerIcon.classList.add('fa-pause');
+                musicPlayerIcon.classList.remove('fa-play');
+            } else {
+                musicPlayer.pause();
+                musicPlayerIcon.classList.add('fa-play');
+                musicPlayerIcon.classList.remove('fa-pause');
+            }
+        });
+        function showForm(formNumber) {
+            // Hide all form containers
+            const formContainers = document.querySelectorAll('.form-container3');
+            formContainers.forEach(container => {
+                container.style.display = 'none';
+            });
+
+            // Show the selected form container
+            const selectedForm = document.getElementById(`form${formNumber}`);
+            selectedForm.style.display = 'block';
+        }
+
+        document.querySelector(".appartement-validation").addEventListener("click", () => {
+            let nom = document.getElementById('nom-projet').value;
+            let desc = document.getElementById('description').value;
+            let file = document.getElementById('documents');
+            let nbrbloc = document.getElementById('nbr_bloc').value;
+            let nbrEtage = document.getElementById('nbr-etage').value;
+            let nbrAppart = document.getElementById('nbr-appart').value;
+
+            if (
+                nom.length == 0 || desc.length == 0 || file.files.length == 0
+                || nbrbloc.length == 0 || nbrEtage.length == 0 || nbrAppart.length == 0) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+            else {
+
+                let formData = new FormData();
+                formData.append('nom', nom);
+                formData.append('description', desc);
+                formData.append('testImage', file.files[0]);
+                formData.append('nbr_bloc', nbrbloc);
+                formData.append('nbr_etage', nbrEtage);
+                formData.append('nbr_appart', nbrAppart);
+
+                fetch('http://localhost:3000/add-project', {
+                    method: 'POST',
+                    body: formData
+                }).then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    console.log(data);
+                }).catch((error) => {
+                    console.log(error);
+                })
             }
 
-            document.querySelector(".appartement-validation").addEventListener("click", ()=>{
-                let nom = document.getElementById('nom-projet').value;
-                let desc = document.getElementById('description').value;
-                let file  = document.getElementById('documents');
-                let nbrbloc = document.getElementById('nbr_bloc').value;
-                let nbrEtage = document.getElementById('nbr-etage').value;
-                let nbrAppart = document.getElementById('nbr-appart').value;
 
-                if(
-                    nom.length == 0 || desc.length == 0 || file.files.length == 0
-                    || nbrbloc.length == 0 || nbrEtage.length == 0 || nbrAppart.length == 0){
-                    alert('Veuillez remplir tous les champs');
-                    return;
-                    }
-                    else {
+        })
 
-                        let formData = new FormData();
-                        formData.append('nom', nom);
-                        formData.append('description', desc);
-                        formData.append('testImage', file.files[0]);
-                        formData.append('nbr_bloc', nbrbloc);
-                        formData.append('nbr_etage', nbrEtage);
-                        formData.append('nbr_appart', nbrAppart);
-        
-                        fetch('http://localhost:3000/add-project', {
-                            method: 'POST',
-                            body: formData
-                        }).then((response) => {
-                            return response.json();
-                        }).then((data) => {
-                            console.log(data);
-                        }).catch((error) => {
-                            console.log(error);
-                        })
-                    }
+        function formatMoneyInput(input) {
+            let value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // Add commas every three numbers
+            input.value = value;
+        }
 
 
-            })
-
-        </script>
+    </script>
 </body>
 
 </html>

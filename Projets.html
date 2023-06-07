@@ -332,13 +332,40 @@
             border: 1px solid orange;
             background-color: #fffffd;
         }
+        .bold-transparent {
+            font-weight: bold;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lift-slide {
+            animation: liftSlide 0.5s ease-out;
+        }
+
+        @keyframes liftSlide {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-50%);
+            }
+            100% {
+                transform: translateY(-70%);
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <header class="header">
-            <div class="logo"><img src="logologin.png" alt="Logo"></div>
+            <div class="logo">
+                <a href="home.html">
+                  <img src="logologin.png" alt="Logo">
+                </a>
+              </div>
             <div class="menu-items">
                 <div>Projects</div>
                 <div>Clients</div>
@@ -351,9 +378,10 @@
             <input type="text" placeholder="Search" />
         </div>
         <div class="additional-menu">
-            <div class="bold-transparent">Appartement</div>
-            <div class="bold-transparent">Commercial</div>
-            <div class="bold-transparent">Parking</div>
+            <div id="Appartement" class="bold-transparent" onclick="redirectToLocalCom3('Appartement')">Appartement</div>
+            <div id="commercial" class="bold-transparent" onclick="redirectToLocalCom()">Commercial</div>
+            <div id="parking" class="bold-transparent" onclick="redirectToLocalCom2('parking')">Parking</div>
+</body>
         </div>
         <div class="facet-container">
             <div class="left">
@@ -668,9 +696,29 @@
             document.querySelector(".form-container").style.display = "flex";
         })
 
+        function redirectToLocalCom() {
+            var element = document.getElementById("commercial");
+            element.classList.add("lift-slide");
+            setTimeout(function () {
+                window.location.href = "localcom.html";
+            }, 500); // Adjust the delay to match the animation duration
+        }
+        
+        function redirectToLocalCom2() {
+            var element = document.getElementById("parking");
+            element.classList.add("lift-slide");
+            setTimeout(function () {
+                window.location.href = "parking.html";
+            }, 500); // Adjust the delay to match the animation duration
+        }
 
-
-
+        function redirectToLocalCom3() {
+            var element = document.getElementById("Appartement");
+            element.classList.add("lift-slide");
+            setTimeout(function () {
+                window.location.href = "Projets.html";
+            }, 500); // Adjust the delay to match the animation duration
+        }
     </script>
 </body>
 
