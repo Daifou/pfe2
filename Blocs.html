@@ -8,6 +8,13 @@
     <title>Document</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
@@ -102,6 +109,7 @@
         background-color: white;
         border: 2px solid black;
         margin-left: 80px;
+        display:flex; justify-content: center; align-items: center;
     }
 
     i {
@@ -260,6 +268,7 @@
 
     .medium-square {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         align-items: center;
         margin-top: 50px;
@@ -292,9 +301,10 @@
         border-radius: 10px;
     }
 
-    .medium-square p {
+    .medium-square h2 {
         font-size: 20px;
         font-weight: 700;
+        padding-right: 170px;
     }
 
     .right-elements {
@@ -324,7 +334,7 @@
     h2 {
         font-family: 'Space Mono', monospace;
         font-weight: 700;
-        font-size: 70px;
+        font-size: 40px;
         position: relative;
         left: 18%;
     }
@@ -413,7 +423,8 @@
     .num {
         font-family: 'Space Mono', monospace;
         font-weight: 700;
-        font-size: 40px;
+        font-size: 15px;
+        width: 100%;
     }
 
     .f {
@@ -454,6 +465,7 @@
     }
 
     #mediumDiv {
+        position: fixed;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -476,6 +488,7 @@
         border: 1px solid black;
         padding: 10px;
         width: 200px;
+        height: 50vh;
       }
       
       .circle {
@@ -506,6 +519,248 @@
         background-color: #E63946;
        width: 80%;
       }
+
+      .case {
+       width: 100%;
+       display: flex;
+         justify-content: space-between;
+            align-items: center;
+      }
+      .case select,
+      .case input{
+        width: 70%;
+        height: 50px;
+        border: 2px solid black;
+        border-radius: 12px;
+        background-color: white;
+        font-family: 'Space Mono', monospace;
+        font-size: 20px;
+        padding-left: 10px;
+      }
+        .case button{
+            width: 20%;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 12px;
+            background-color: #EEF30F;
+            font-family: 'Space Mono', monospace;
+            font-size: 20px;
+            padding-left: 10px;
+            transition: all .2s ease-out;
+        }
+        .case button:hover{
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        /* [Object] Modal
+ * =============================== */
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  background: rgba(0,0,0, .9);
+  transition: opacity .25s ease;
+}
+
+.modal__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.modal-state {
+  display: none;
+}
+
+.modal-state:checked + .modal {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-state:checked + .modal .modal__inner {
+  top: 0;
+}
+
+.modal__inner {
+  transition: top .25s ease;
+  position: absolute;
+  top: -20%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  margin: auto;
+  background: #fff;
+  border-radius: 5px;
+  padding: 1em 2em;
+  height: 70%;
+}
+
+.modal__close {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  width: 1.1em;
+  height: 1.1em;
+  cursor: pointer;
+}
+
+.modal__close:after,
+.modal__close:before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 1.5em;
+  background: #ccc;
+  display: block;
+  transform: rotate(45deg);
+  left: 50%;
+  margin: -3px 0 0 -1px;
+  top: 0;
+}
+.modal__content{
+    display:flex;
+    flex-direction: row;
+}
+.modal__close:hover:after,
+.modal__close:hover:before {
+  background: #aaa;
+}
+
+.modal__close:before {
+  transform: rotate(-45deg);
+}
+
+.side{
+   display:flex;
+   flex-direction: column;
+   justify-content: center;
+   padding: 0 15px;
+}
+
+.payement{
+    width: 500px;
+}
+.payement div {
+    width: 100%;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px; 
+
+}
+.payement div span{
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #000
+}
+.payement div input{
+    width: 50%; 
+    height: 30px; 
+    border: 1px solid #000; 
+    border-radius: 5px; 
+    padding: 5px; 
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #000;
+    text-align: center;
+}
+.payement div input::placeholder{
+color: greenyellow;
+}
+
+.payement div button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%; 
+    height: 30px; 
+    border: 1px solid #000; 
+    border-radius: 5px; 
+    padding: 5px; 
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #000; 
+    background: #EEF30F;
+    transition: all .2s ease-in-out;
+}
+.payement div button:hover{
+    background: #000; 
+    color: #fff; 
+    cursor: pointer
+}
+.information {
+    align-items: center; 
+    justify-content: center; 
+    width:  25%; 
+    border-right: 2px dashed #000; 
+    height: 250px
+}
+
+
+@media screen and (max-width: 768px) {
+	
+  .modal__inner {
+    width: 90%;
+    height: 90%;
+    box-sizing: border-box;
+  }
+}
+
+
+/* Other
+ * =============================== */
+body {
+  padding: 1%;
+  font: 1/1.5em sans-serif;
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.btn:hover,
+.btn:focus {
+
+    transform: scale(1.1);
+}
+
+.btn:active {
+  background: #27ae60;
+  box-shadow: 0 1px 2px rgba(0,0,0, .2) inset;
+}
+
+.btn--blue {
+  background: #2980b9;
+}
+
+.btn--blue:hover,
+.btn--blue:focus {
+  background: #3498db;
+}
+
+.btn--blue:active {
+  background: #2980b9;
+}
+
+p img {
+  max-width: 200px;
+  height: auto;
+  float: left;
+  margin: 0 1em 1em 0;
+}
+        
 </style>
 
 <body>
@@ -524,116 +779,47 @@
             <input type="text" placeholder="Search" />
         </div>
         <div class="blocs">
-            <div class="rectangals">
-                <div class="circle-label">B1</div>
-                <div class="cylinder-container">
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 1</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 2</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 3</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 4</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rectangals">
-                <div class="circle-label">B2</div>
-                <div class="cylinder-container">
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 1</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 2</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 3</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 4</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rectangals">
-                <div class="circle-label">B3</div>
-                <div class="cylinder-container">
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 1</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 2</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 3</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 4</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rectangals">
-                <div class="circle-label">B4</div>
-                <div class="cylinder-container">
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 1</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 2</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 3</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 4</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rectangals">
-                <div class="circle-label">B5</div>
-                <div class="cylinder-container">
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 1</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 2</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 3</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 4</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rectangals">
-                <div class="circle-label">B6</div>
-                <div class="cylinder-container">
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 1</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 2</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 3</div>
-                    </div>
-                    <div class="cylinder">
-                        <div class="cylinder-label">Etage 4</div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    <div class="big-div">
-        <h2 class="big-title">B1 - Etage 1</h2>
+</div>
+    <div class="big-div" id="big-div">
+        <h2 class="big-title"></h2>
         <button class="close-button">x</button>
-        <div class="medium-square">
+        <div class="medium-square" style="border: 2px dashed black">
+            <h2>lLPP - Bloc 1 - Etage 1 - Appart N=°1</h2>
+            <div class="nbr-room case">
+                <label for="">Nombre de Chambre</label>
+                <select name="chambre" id="chambre">
+                <option value="F2">F2</option>
+                <option value="F3">F3</option>
+                <option value="F4">F4</option>
+                <option value="F5">F5</option>
+            </select>
+            
+            </div>
+            <div class="client case">
+                <label for="">Client</label>
+            <select name="chambre" id="chambre">
+                <option value="F2">Hamid</option>
+                <option value="F3">Abderahman</option>
+                <option value="F4">Mohamed</option>
+            </select>
+            </div>
+            <div class="case">
+                <label for="">Surface(m²)</label>
+            <input type="number" name="surface" placeholder="Surface">
+            </div>
+            <div class="case">
+                <label for="">Lot</label>
+            <input type="text" name="Lot" placeholder="Lot">
+            </div>
+            <div class="case" style="justify-content: center;">
+                <button>Valider</button>
+            </div>
+
+        </div>
+         <div class="medium-square" style="flex-direction: row;">
             <div class="left-elements">
-              <div class="num">N°: 01</div>
+              <div class="num">LPP - Bloc 1 - Etage 1 - Appart N=°1</div>
               <div class="f">F3 3</div>
               <div class="surface" contenteditable>123 m²</div>
               <div class="lot" contenteditable>LOT</div>
@@ -661,6 +847,7 @@
               </div>
             </div>
           </div>
+        <!--
           <div class="medium-square">
             <div class="left-elements">
               <div class="num">N°: 01</div>
@@ -677,7 +864,7 @@
               <div class="label">Label:</div>
               <input type="text" class="input-field">
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       
@@ -695,9 +882,688 @@
         <div class="paid">Payé: 120000 DA</div>
         <div class="remaining">Rest: 30000</div>
         
-    </div>
-    <script>
+    </div> 
+    
+    <!-- <h1>Pure CSS modal box</h1>
+    <div>
+      <p>You can place trigger button wherever you want.</p>
+      <p>
+        <label class="btn" for="modal-1">Show me modal with a cat</label>
+        <label class="btn btn--blue" for="modal-2">Click for more AWW</label>
+      </p>
+    </div> -->
 
+    
+<input class="modal-state" id="modal-1" type="checkbox" />
+<div class="modal">
+  <label class="modal__bg" for="modal-1"></label>
+  <div class="modal__inner">
+      <h2 style=></h2>
+    <label class="modal__close" for="modal-1"></label>
+    <div class="modal__content">
+        <div class="side information" >
+            <div class="circle" style="margin-left: 0; height: 100px; width: 100px; font-size: 45px;">A</div>
+            <h3></h3>
+        </div>
+        <div class="side payement">
+
+            <div>
+                <span>Prix a payer :</span> 
+                <span> 150000 DA </span>
+            </div>
+            <div>
+                <span>Reste :</span> 
+                <span> 150000 DA </span>
+            </div>
+
+            <div>
+                <span>Payé</span> 
+                <input type="number" name="paye" id="paye">
+            </div>
+
+            <div>
+                <button>Valider</button>
+            </div>
+    </div>
+  </div>
+</div>
+
+
+      </div>
+    <script>
+        console.log(sessionStorage.getItem('current-id'));
+
+        var currentId = sessionStorage.getItem('current-id');
+        let blocCount = 1;
+        fetch(`http://localhost:3000/get-bloc/${currentId}`)
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(bloc=>{
+                let rectangals = document.createElement('div');
+                rectangals.classList.add('rectangals');
+                let circleLabel = document.createElement('div');
+                circleLabel.classList.add('circle-label');
+                circleLabel.innerHTML = `B${blocCount}`;
+                let h3 = document.createElement('h3');
+                h3.innerText = bloc.bloc_name;
+
+                rectangals.appendChild(circleLabel);
+                rectangals.appendChild(h3);
+
+                fetch(`http://localhost:3000/get-etage/${bloc.bloc_id}`)
+                .then(res => res.json())
+                .then(res =>{
+                    let cylinderContainer = document.createElement('div');
+                    cylinderContainer.classList.add('cylinder-container');
+                    res.forEach((etage, i)=>{
+                        let cylinder = document.createElement('div');
+                        cylinder.classList.add('cylinder');
+                        cylinder.setAttribute('id', etage.etage_id)
+                        let cylinderLabel = document.createElement('div');
+                        cylinderLabel.classList.add('cylinder-label');
+                        cylinderLabel.innerText = etage.etage_name;
+                        cylinder.appendChild(cylinderLabel);
+                        cylinder.addEventListener('click', ()=>{
+
+                            let currentEtage = etage.etage_id;
+                            let bigDiv = document.querySelector('.big-div');
+                            bigDiv.innerHTML = '';
+
+                            let h2 = document.createElement('h2');
+                            h2.classList.add("big-title");
+                            h2.innerText =  etage.etage_name;
+                            bigDiv.appendChild(h2);
+
+                            let button = document.createElement("button")
+                            button.classList.add("close-button");
+                            button.innerText = "X";
+                            button.addEventListener("click", function () {
+                                var element = document.querySelector(".big-div");
+                                element.style.display = "none"; // Hide the element
+                             });
+                            bigDiv.appendChild(button);
+
+                            fetch(`http://localhost:3000/get-appartement/${etage.etage_id}`)
+                            .then(aptRes => aptRes.json())
+                            .then(apt=>{
+                                apt.forEach(a => {
+                                    if(a.purchased_by == null)
+                                        createMediumSquarePending(a, bigDiv, etage.etage_id)
+                                
+                                    else
+                                        createMediumSquareReady(a, bigDiv)
+                                    
+                                
+                                })
+                            })
+                            
+                           
+                                document.querySelector('.big-div').style.display = 'block';
+                            document.querySelector('.big-div h2').innerHTML = etage.etage_name
+                            
+                            
+
+                        });
+                        cylinderContainer.appendChild(cylinder);
+                    })
+                    rectangals.appendChild(cylinderContainer);
+                })
+                // let cylinderContainer = document.createElement('div');
+                // cylinderContainer.classList.add('cylinder-container');
+                
+                // rectangals.appendChild(cylinderContainer);
+                document.querySelector('.blocs').appendChild(rectangals);
+                blocCount++;
+            })
+        });
+        const createMediumSquarePending = (a, bigDiv, currentEtage)=>{
+                                    let square = document.createElement('div')
+                                    square.classList.add('medium-square');
+                                    square.style.border = "2px dashed black";
+
+                                    let h2 = document.createElement('h2');
+                                    h2.innerText = a.appartement_name;
+                                    square.appendChild(h2);
+
+                                    let nbrRoom = document.createElement('div');
+                                    nbrRoom.classList.add('nbr-room');
+                                    nbrRoom.classList.add('case')
+                                    let nbrRoomLabel = document.createElement('label');
+                                    nbrRoomLabel.innerText = "Nombre de Chambre";
+                                    nbrRoom.appendChild(nbrRoomLabel);
+                                    let nbrRoomSelect = document.createElement('select');
+                                    nbrRoomSelect.setAttribute('name', 'chambre');
+                                    nbrRoomSelect.setAttribute('id', 'chambre');
+                                    let nbrRoomOption1 = document.createElement('option');
+                                    nbrRoomOption1.setAttribute('value', 'F2');
+                                    nbrRoomOption1.innerText = "F2";
+                                    let nbrRoomOption2 = document.createElement('option');
+                                    nbrRoomOption2.setAttribute('value', 'F3');
+                                    nbrRoomOption2.innerText = "F3";
+                                    let nbrRoomOption3 = document.createElement('option');
+                                    nbrRoomOption3.setAttribute('value', 'F4');
+                                    nbrRoomOption3.innerText = "F4";
+                                    let nbrRoomOption4 = document.createElement('option');
+                                    nbrRoomOption4.setAttribute('value', 'F5');
+                                    nbrRoomOption4.innerText = "F5";
+                                    nbrRoomSelect.appendChild(nbrRoomOption1);
+                                    nbrRoomSelect.appendChild(nbrRoomOption2);
+                                    nbrRoomSelect.appendChild(nbrRoomOption3);
+                                    nbrRoomSelect.appendChild(nbrRoomOption4);
+                                    nbrRoom.appendChild(nbrRoomSelect);
+                                    square.appendChild(nbrRoom);
+                                    let client = document.createElement("div")
+                                    client.classList.add("client")
+                                    client.classList.add("case")
+                                    let clientLabel = document.createElement("label")
+                                    clientLabel.innerText = "Client"
+                                    client.appendChild(clientLabel)
+                                    let clientSelect = document.createElement("select")
+                                    clientSelect.setAttribute("name", "client")
+                                    clientSelect.setAttribute("id", "client")
+
+                                    fetch(`http://localhost:3000/get-client-project/${currentId}`).
+                                    then(cliRes => cliRes.json()).
+                                    then(client => {
+                                        client.forEach(c => {
+                                            let clientOption = document.createElement("option")
+                                            clientOption.setAttribute("value", c.client_id)
+                                            clientOption.innerText = c.client_nom
+                                            clientSelect.appendChild(clientOption)
+                                        })
+                                        console.log(client);
+                                        
+                                    })
+
+                                    client.appendChild(clientSelect)
+                                    square.appendChild(client)
+
+                                    let surface = document.createElement("div")
+                                    surface.classList.add("case")
+                                    let surfaceLabel = document.createElement("label")
+                                    surfaceLabel.innerText = "Surface(m²)"
+                                    surface.appendChild(surfaceLabel)
+                                    let surfaceInput = document.createElement("input")
+                                    surfaceInput.setAttribute("type", "number")
+                                    surfaceInput.setAttribute("name", "surface")
+                                    surfaceInput.setAttribute("id", "surface")
+                                    surface.appendChild(surfaceInput)
+                                    square.appendChild(surface)
+
+                                    let lot =  document.createElement("lot")
+                                    lot.classList.add("case")
+
+                                    let lotLabel = document.createElement("label")
+                                    lotLabel.innerText = "Lot"
+                                    lot.appendChild(lotLabel)
+                                    let lotInput = document.createElement("input")
+                                    lotInput.setAttribute("type", "text")
+                                    lotInput.setAttribute("name", "lot")
+                                    lotInput.setAttribute("id", "lot")
+                                    lot.appendChild(lotInput)
+                                    square.appendChild(lot)
+
+                                    let valider = document.createElement("div")
+                                    valider.classList.add("case")
+                                    let validerButton = document.createElement("button")
+                                    validerButton.innerText = "Valider"
+                                    validerButton.addEventListener('click', ()=>{
+                                        let chambreval = nbrRoomSelect.value;
+                                        let clientval = clientSelect.value;
+                                        let surfaceval = surfaceInput.value;
+                                        let lotval = lotInput.value;
+
+                                        fetch(`http://localhost:3000/update-appartement/${a.appartement_id}`,
+                                        {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                surface: surfaceval,
+                                                lot: lotval,
+                                                chambre: chambreval,
+                                                project_id: currentId, 
+                                                etage: currentEtage,
+                                                client: clientval
+                                            })
+                                        }
+                                        ).then(res => res.json())
+                                        .then(r =>{
+                                                alert("Appartement ajouté avec succès")
+                                                window.location.reload()
+                                            
+                                        })
+                                    })
+                                    
+                                    valider.appendChild(validerButton)
+                                    square.appendChild(valider)
+
+                                    bigDiv.appendChild(square)
+
+        }
+        const createMediumSquareReady = (a, bigDiv)=>{
+            let clientInfo = {}
+            fetch(`http://localhost:3000/get-client-information/${a.purchased_by}`)
+            .then(res => res.json())
+            .then(client => {
+                console.log(client);
+                clientInfo = client
+            });
+                
+                let div = document.createElement('div');
+                div.classList.add('medium-square');
+                div.style.flexDirection = "row";
+                let square = document.createElement("div");
+                square.classList.add("left-elements")
+                let num = document.createElement("div")
+                num.classList.add("num")
+                num.innerText = a.appartement_name
+                square.appendChild(num)
+                let f = document.createElement("div")
+                f.classList.add("f")
+                f.innerText = a.chambre
+                square.appendChild(f)
+                let surface = document.createElement("div")
+                surface.classList.add("surface")
+                surface.innerText = a.surface + "m²"   
+                square.appendChild(surface)
+                let lot = document.createElement("div")
+                lot.classList.add("lot")
+                lot.innerText = a.lot
+                square.appendChild(lot)
+                div.appendChild(square)
+                let square2 = document.createElement("div")
+                square2.classList.add("right-elements")
+                let newcylinder1 = document.createElement("label")
+                newcylinder1.classList.add("btn")
+                newcylinder1.setAttribute("for", "modal-1")
+                newcylinder1.classList.add("newcylinder1")
+                
+                newcylinder1.addEventListener('click', ()=>{
+                    console.log(a.etape_index);
+                    
+                   
+                    if(a.etape_index == 0){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner").setAttribute("id", a.appartement_id)
+                        document.querySelector(".modal__inner").setAttribute("data-etape", a.etape_index);
+                        document.querySelector(".modal__inner").setAttribute("data-client", a.purchased_by);
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+
+                        if(document.querySelector(".modal__inner input").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner input").removeAttribute("disabled");
+                        if(document.querySelector(".modal__inner button").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner button").removeAttribute("disabled");
+                    document.querySelector(".modal__inner h2").innerText = "Commende"
+                    document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                    document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                    document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 20 / 100)  + " DA"
+                    document.querySelectorAll(".modal__inner span")[3].innerText = a.prix_reste + " DA"
+                    }
+                    else if(a.etage_index != 0){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Paiment Effectué"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 20 / 100) + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0+ " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "PAYÈ");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", "true")
+                        document.querySelector(".modal__inner button").setAttribute("disabled", "false");
+
+                    }
+                })
+                let leftText1 = document.createElement("span")
+                leftText1.classList.add("left-text")
+                leftText1.innerText = "Commende"
+                newcylinder1.appendChild(leftText1)
+                let rightText1 = document.createElement("span")
+                rightText1.classList.add("right-text")
+                rightText1.innerText = "20%"
+                newcylinder1.appendChild(rightText1)
+                square2.appendChild(newcylinder1)
+                let newcylinder2 = document.createElement("label")
+                newcylinder2.classList.add("btn")
+                newcylinder2.setAttribute("for", "modal-1")
+                newcylinder2.classList.add("newcylinder2")
+                newcylinder2.addEventListener('click', ()=>{
+                    if(a.etape_index == 1){
+                        document.querySelector(".modal__inner").setAttribute("id", a.appartement_id)
+                        document.querySelector(".modal__inner").setAttribute("data-etape", a.etape_index);
+                        document.querySelector(".modal__inner").setAttribute("data-client", a.purchased_by);
+
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+
+                        if(document.querySelector(".modal__inner input").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner input").removeAttribute("disabled");
+                        if(document.querySelector(".modal__inner button").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner button").removeAttribute("disabled");
+                    document.querySelector(".modal__inner h2").innerText = "Fondation"
+                    document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                    document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                    document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 15 / 100) + " DA"
+                    document.querySelectorAll(".modal__inner span")[3].innerText = a.prix_reste + " DA"
+                    }
+                    else if(a.etape_index < 1){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Payé les etape precedent"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = 0 + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0 + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true);
+                        document.querySelector(".modal__inner button").setAttribute("disabled", true);
+
+                    }
+                    else if(a.etape_index > 1){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Paiment Effectué"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 15 / 100) + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0 + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "PAYÈ");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true)
+                        document.querySelector(".modal__inner button").setAttribute("disabled", false);
+
+                    }
+                })
+                let leftText2 = document.createElement("span")
+                leftText2.classList.add("left-text")
+                leftText2.innerText = "Fondation"
+                newcylinder2.appendChild(leftText2)
+                let rightText2 = document.createElement("span")
+                rightText2.classList.add("right-text")
+                rightText2.innerText = "15%"
+                newcylinder2.appendChild(rightText2)
+                square2.appendChild(newcylinder2)
+                let newcylinder3 = document.createElement("label")
+                newcylinder3.classList.add("newcylinder3")
+                newcylinder3.classList.add("btn")
+                newcylinder3.setAttribute("for", "modal-1")
+                newcylinder3.addEventListener('click', ()=>{
+                    if(a.etape_index == 2){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner").setAttribute("data-etape", a.etape_index);
+
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner").setAttribute("id", a.appartement_id)
+                        document.querySelector(".modal__inner").setAttribute("data-client", a.purchased_by);
+
+                        if(document.querySelector(".modal__inner input").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner input").removeAttribute("disabled");
+                        if(document.querySelector(".modal__inner button").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner button").removeAttribute("disabled");
+                    document.querySelector(".modal__inner h2").innerText = "Break + Béton"
+                    document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                    document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                    document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 35 / 100) + " DA"
+                    document.querySelectorAll(".modal__inner span")[3].innerText = a.prix_reste + " DA"
+                    }
+                    else if(a.etape_index < 2){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Payé les etape precedent"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = 0 + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0 + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true);
+                        document.querySelector(".modal__inner button").setAttribute("disabled", true);
+
+                    }
+                    else if(a.etape_index > 2){
+                        bigDiv.style.display = "none"
+                        
+                        document.querySelector(".modal__inner h2").innerText = "Paiment Effectué"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 35 / 100) + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0+ " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "PAYÈ");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true)
+                        document.querySelector(".modal__inner button").setAttribute("disabled", true);
+
+                    }
+                })
+                let leftText3 = document.createElement("span")
+                leftText3.classList.add("left-text")
+                leftText3.innerText = "Break + béton"
+                newcylinder3.appendChild(leftText3)
+                let rightText3 = document.createElement("span")
+                rightText3.classList.add("right-text")
+                rightText3.innerText = "35%"
+                newcylinder3.appendChild(rightText3)
+                square2.appendChild(newcylinder3)
+                let newcylinder4 = document.createElement("label")
+                newcylinder4.classList.add("btn")
+                newcylinder4.setAttribute("for", "modal-1")
+                newcylinder4.classList.add("newcylinder4")
+                newcylinder4.addEventListener('click', ()=>{
+                    if(a.etape_index == 3){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner").setAttribute("id", a.appartement_id)
+                        document.querySelector(".modal__inner").setAttribute("data-etape", a.etape_index);
+                        document.querySelector(".modal__inner").setAttribute("data-client", a.purchased_by);
+
+
+                        if(document.querySelector(".modal__inner input").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner input").removeAttribute("disabled");
+                        if(document.querySelector(".modal__inner button").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner button").removeAttribute("disabled");
+                    document.querySelector(".modal__inner h2").innerText = "Finie"
+                    document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                    document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                    document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 25 / 100) + " DA"
+                    document.querySelectorAll(".modal__inner span")[3].innerText = a.prix_reste + " DA"
+                    }
+                    else if(a.etape_index < 3){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Payé les etape precedent"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = 0 + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0 + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true);
+                        document.querySelector(".modal__inner button").setAttribute("disabled", true);
+
+                    }
+                    else if(a.etape_index > 3){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Paiment Effectué"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 25 / 100) + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0 + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "PAYÈ");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true)
+                        document.querySelector(".modal__inner button").setAttribute("disabled", false);
+
+                    }
+
+                })
+                let leftText4 = document.createElement("span")
+                leftText4.classList.add("left-text")
+                leftText4.innerText = "Finie"
+                newcylinder4.appendChild(leftText4)
+                let rightText4 = document.createElement("span")
+                rightText4.classList.add("right-text")
+                rightText4.innerText = "25%"
+                newcylinder4.appendChild(rightText4)
+                square2.appendChild(newcylinder4)
+                let newcylinder5 = document.createElement("label")
+                newcylinder5.classList.add("btn")
+                newcylinder5.setAttribute("for", "modal-1")
+                newcylinder5.classList.add("newcylinder5")
+                newcylinder5.addEventListener('click', ()=>{
+                    if(a.etape_index == 4){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner").setAttribute("data-etape", a.etape_index);
+                        document.querySelector(".modal__inner").setAttribute("id", a.appartement_id)
+                        document.querySelector(".modal__inner").setAttribute("data-client", a.purchased_by);
+
+                        if(document.querySelector(".modal__inner input").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner input").removeAttribute("disabled");
+                        if(document.querySelector(".modal__inner button").hasAttribute("disabled"))
+                            document.querySelector(".modal__inner button").removeAttribute("disabled");
+                    document.querySelector(".modal__inner h2").innerText = "Cle"
+                    document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                    document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                    document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 5 / 100) + " DA"
+                    document.querySelectorAll(".modal__inner span")[3].innerText = a.prix_reste + " DA"
+                    }
+                    else if(a.etape_index < 4){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Payé les etape precedent"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = 0 + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = 0 + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true);
+                        document.querySelector(".modal__inner button").setAttribute("disabled", true);
+
+                    }
+                    else if(a.etape_index > 4){
+                        bigDiv.style.display = "none"
+                        document.querySelector(".modal__inner h2").innerText = "Paiment Effectué"
+                        document.querySelector(".modal__inner .circle").innerText = clientInfo[0].client_nom[0].toUpperCase() + clientInfo[0].client_prenom[0].toUpperCase()
+                        document.querySelector(".modal__inner h3").innerText = clientInfo[0].client_nom + " " + clientInfo[0].client_prenom[0].toUpperCase();
+                        document.querySelectorAll(".modal__inner span")[1].innerText = (a.prix_total * 5 / 100) + " DA"
+                        document.querySelectorAll(".modal__inner span")[3].innerText = a.prix_reste + " DA"
+                        document.querySelector(".modal__inner input").setAttribute("placeholder", "PAYÈ");
+                        document.querySelector(".modal__inner input").setAttribute("disabled", true)
+                        document.querySelector(".modal__inner button").setAttribute("disabled", false);
+
+                    }
+
+                })
+                let leftText5 = document.createElement("span")
+                leftText5.classList.add("left-text")
+                leftText5.innerText = "Cle"
+                newcylinder5.appendChild(leftText5)
+                let rightText5 = document.createElement("span")
+                rightText5.classList.add("right-text")
+                rightText5.innerText = "5%"
+                newcylinder5.appendChild(rightText5)
+                square2.appendChild(newcylinder5)
+
+                div.appendChild(square2)
+
+               
+                //     <div class="medium-square" style="flex-direction: row;">
+        //     <div class="left-elements">
+        //       <div class="num">LPP - Bloc 1 - Etage 1 - Appart N=°1</div>
+        //       <div class="f">F3 3</div>
+        //       <div class="surface" contenteditable>123 m²</div>
+        //       <div class="lot" contenteditable>LOT</div>
+        //     </div>
+        //     <div class="right-elements">
+        //       <div class="newcylinder1" onclick="showMediumDiv(0)">
+        //         <span class="left-text">Commende</span>
+        //         <span class="right-text">20%</span>
+        //       </div>
+        //       <div class="newcylinder2" onclick="showMediumDiv(1)">
+        //         <span class="left-text">Fondation</span>
+        //         <span class="right-text">20%</span>
+        //       </div>
+        //       <div class="newcylinder3" onclick="showMediumDiv(2)">
+        //         <span class="left-text">Break + Biton</span>
+        //         <span class="right-text">20%</span>
+        //       </div>
+        //       <div class="newcylinder4" onclick="showMediumDiv(3)">
+        //         <span class="left-text">Finie</span>
+        //         <span class="right-text">20%</span>
+        //       </div>
+        //       <div class="newcylinder5" onclick="showMediumDiv(4)">
+        //         <span class="left-text">Cle</span>
+        //         <span class="right-text">20%</span>
+        //       </div>
+        //     </div>
+        //   </div>
+            bigDiv.appendChild(div)
+        }
+        document.querySelector(".modal__inner button").addEventListener("click", ()=>{
+            
+            let id = document.querySelector(".modal__inner").getAttribute("id")
+            let value = document.querySelector(".modal__inner input").value;
+            let totalModal = document.querySelectorAll('.modal__inner span')[1].textContent.split(" ")[0];
+            if(value == ''){
+                alert("Remplir le champ")
+                return;
+            }
+            let reste = document.querySelectorAll('.modal__inner span')[3].textContent.split(" ")[0];
+            if(parseInt(reste) < parseInt(value)){
+                console.log(reste - value);
+
+                alert("Le montant est supérieur au reste")
+                return;
+            }
+            let sub = reste - value;
+            if(sub == 0){
+            let etape = document.querySelector(".modal__inner").getAttribute("data-etape");
+            let resteNew = 0;
+                switch(etape){
+                    case "0":
+                       resteNew = ((totalModal * 100 / 20) * 15) / 100;
+                        break;
+                    case "1":
+                        resteNew = ((totalModal * 100 / 15) * 35) / 100;
+                        break;
+                    case "2": 
+                        resteNew = ((totalModal * 100 / 35) * 25) / 100;
+                        break;
+                    case "3":
+                        resteNew = ((totalModal * 100 / 25) * 5) / 100;
+                        break;
+                    case "4":
+                        resteNew = 0;
+                        break;
+
+                }
+                fetch(`http://localhost:3000/update-etape/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        prix_reste: resteNew, 
+                        etape: (parseInt(etape) + 1),
+                        client: document.querySelector(".modal__inner").getAttribute("data-client")
+                })
+            }
+                ).then(res => res.json())
+                .then(data => {
+                    alert("Paiment effectué et l'etape est evalué");
+                    window.location.reload();
+                })
+                
+            }       
+            else{
+                fetch(`http://localhost:3000/update-reste/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({prix_reste: sub})
+                }).then(res => res.json())
+                .then(data => {
+                    alert("Paiment effectué");
+                    window.location.reload();
+                })
+
+                
+
+            }  
+            
+        })
+        
         function showMediumDiv(cylinderNumber) {
             var mediumDiv = document.getElementById("mediumDiv");
           
@@ -754,10 +1620,7 @@
           
             mediumDiv.style.display = "block";
           }
-        document.querySelector(".close-button").addEventListener("click", function () {
-            var element = document.querySelector(".big-div");
-            element.style.display = "none"; // Hide the element
-        });
+        
         // Get the .cylinder elements
         const cylinders = document.querySelectorAll('.cylinder');
 

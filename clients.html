@@ -100,11 +100,12 @@
         }
 
         table {
-            width: 100%;
             border-collapse: collapse;
             border: none;
             position: relative;
             left: 100px;
+            width: 75vw;
+
         }
 
         table td,
@@ -152,7 +153,8 @@
             border-radius: 5px;
             width: 50%;
             margin: 0 auto;
-            margin-bottom: 20px; /* Adjust margin-bottom to create space above the container */
+            margin-bottom: 20px;
+            /* Adjust margin-bottom to create space above the container */
             position: relative;
             top: -80px;
         }
@@ -160,6 +162,38 @@
         .more-info-container p {
             margin-bottom: 10px;
         }
+
+
+        table th,
+        table td {
+            padding: 8px;
+        }
+
+        table tr.expandable-row {
+            cursor: pointer;
+        }
+
+        table tr.expanded-row {
+            display: none;
+            
+        }
+
+        table tr.expanded-row td {
+            padding: 20px;
+            border-top: none;
+        }
+
+        .title-head{
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .result{
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        
     </style>
 </head>
 
@@ -167,10 +201,10 @@
     <div class="container">
         <header class="header">
             <div class="logo">
-  <a href="home.html">
-    <img src="logologin.png" alt="Logo">
-  </a>
-</div>
+                <a href="home.html">
+                    <img src="logologin.png" alt="Logo">
+                </a>
+            </div>
             <div class="menu-items">
                 <div onclick="window.location.href = 'Projets.html';">Projects</div>
                 <div onclick="window.location.href = 'Client.html';">Clients</div>
@@ -181,7 +215,7 @@
     </div>
     <div class="content">
         <h2><span style="font-weight: normal;">Liste de</span> <span style="font-weight: bold;">Clients</span></h2>
-        <table class="table-spacing">
+        <table id="myTable" class="table-spacing">
             <thead>
                 <tr>
                     <th></th>
@@ -189,96 +223,142 @@
                     <th>Numero</th>
                     <th>Email</th>
                     <th>Date</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <div class="initial-circle">HM</div>
-                    </td>
-                    <td>Hadj Mohammed</td>
-                    <td>555-689-4376</td>
-                    <td>victoria.jones99@gmail.com</td>
-                    <td>08.04.23</td>
-                    <td><i class="fas fa-info-circle" onclick="toggleMoreInfoRow(this)"></i></td>
-                </tr>
-                <tr class="more-info-row">
-                    <td colspan="6">
-                        <div class="more-info-container">
-                            <p><strong>Participant au Projet:</strong> résidence vue sur mer Mostaganem Kharrouba</p>
-                            <p><strong>Etape de versement:</strong> 50%</p>
-                            <p><strong>Type de Client:</strong> Acheteur</p>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="initial-circle">YD</div>
-                    </td>
-                    <td>Yacine Djabo</td>
-                    <td>555-689-4376</td>
-                    <td>victoria.jones99@gmail.com</td>
-                    <td>08.04.23</td>
-                    <td><i class="fas fa-info-circle" onclick="toggleMoreInfoRow(this)"></i></td>
-                </tr>
-                <tr class="more-info-row">
-                    <td colspan="6">
-                        <div class="more-info-container">
-                            <p><strong>Participant au Projet:</strong> résidence vue sur mer Mostaganem Kharrouba</p>
-                            <p><strong>Etape de versement:</strong> 50%</p>
-                            <p><strong>Type de Client:</strong> Acheteur</p>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Additional rows -->
-                <tr>
-                    <td>
-                        <div class="initial-circle">AB</div>
-                    </td>
-                    <td>John Doe</td>
-                    <td>555-123-4567</td>
-                    <td>johndoe@example.com</td>
-                    <td>08.04.23</td>
-                    <td><i class="fas fa-info-circle" onclick="toggleMoreInfoRow(this)"></i></td>
-                </tr>
-                <tr class="more-info-row">
-                    <td colspan="6">
-                        <div class="more-info-container">
-                            <p><strong>Participant au Projet:</strong> Project XYZ</p>
-                            <p><strong>Etape de versement:</strong> 75%</p>
-                            <p><strong>Type de Client:</strong> Vendeur</p>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="initial-circle">EF</div>
-                    </td>
-                    <td>Jane Smith</td>
-                    <td>555-987-6543</td>
-                    <td>janesmith@example.com</td>
-                    <td>08.04.23</td>
-                    <td><i class="fas fa-info-circle" onclick="toggleMoreInfoRow(this)"></i></td>
-                </tr>
-                <tr class="more-info-row">
-                    <td colspan="6">
-                        <div class="more-info-container">
-                            <p><strong>Participant au Projet:</strong> Project ABC</p>
-                            <p><strong>Etape de versement:</strong> 30%</p>
-                            <p><strong>Type de Client:</strong> Acheteur</p>
-                        </div>
-                    </td>
-                </tr>
+               
+
+                <!-- Add more rows as needed -->
             </tbody>
         </table>
+
     </div>
 
     <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const expandableRows = document.getElementsByClassName('expandable-row');
+
+            // Add click event listener to each expandable row
+            for (let i = 0; i < expandableRows.length; i++) {
+                const row = expandableRows[i];
+                row.addEventListener('click', function () {
+                    // Toggle the display of the next sibling row with the 'expanded-row' class
+                    const expandedRow = this.nextElementSibling;
+                    expandedRow.style.display = (expandedRow.style.display === 'table-row') ? 'none' : 'table-row';
+                });
+            }
+        });
+
         function toggleMoreInfoRow(icon) {
             const row = icon.parentNode.parentNode.nextElementSibling;
             row.classList.toggle('is-expanded');
         }
+        const id = sessionStorage.getItem('id')
+        const tableList = document.querySelector('.table-spacing')
+
+        fetch(`http://localhost:3000/get-client/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                data.forEach(client => {
+                    let tr = document.createElement('tr');
+                    tr.setAttribute('class', 'expandable-row')
+
+                    let icon = document.createElement('td');
+                    let initial = document.createElement('div');
+                    initial.setAttribute('class', 'initial-circle');
+                    initial.innerText = client.client_nom[0] + client.client_prenom[0];
+                    icon.appendChild(initial);
+
+                    let nom = document.createElement('td');
+                    nom.innerText = client.client_nom + ' ' + client.client_prenom;
+
+                    let numero = document.createElement('td');
+                    numero.innerText = client.client_phone;
+
+                    let email = document.createElement('td');
+                    email.innerText = client.client_adresse;
+
+
+                    let date = document.createElement('td');
+                    date.innerText = new Date(client.date).toLocaleDateString('en-GB');
+
+
+
+                    tr.appendChild(icon);
+                    tr.appendChild(nom);
+                    tr.appendChild(numero);
+                    tr.appendChild(email);
+                    tr.appendChild(date);
+
+                    let tr2 = document.createElement('tr')
+                    tr2.setAttribute('class', 'expanded-row');
+
+                    let td = document.createElement('td');
+                    td.setAttribute('colspan', '2');
+
+                    let projectTitle = document.createElement('p');
+                    projectTitle.setAttribute('class', 'title-head');
+
+                    projectTitle.innerText = 'Participant au projet';
+                    td.appendChild(projectTitle);
+
+                    let projectname = document.createElement('p');
+                    projectname.setAttribute('class', 'result');
+                    projectname.innerText = client.project_name;
+
+                    td.appendChild(projectname);
+                    
+
+                    let td2 = document.createElement('td');
+                    td2.setAttribute('colspan', '2');   
+
+                    let etapeversement = document.createElement('p');
+                    etapeversement.setAttribute('class', 'title-head');
+                    etapeversement.innerText = 'Etape de versement';
+                    td2.appendChild(etapeversement);
+
+                    let etape = document.createElement('p');
+                    etape.setAttribute('class', 'result');
+                    etape.innerText = client.etape_versement + '%';
+
+                    td2.appendChild(etape);
+
+                    let td3 = document.createElement('td');
+                    td3.setAttribute('colspan', '2');
+
+                    let typeclient = document.createElement('p');
+                    typeclient.setAttribute('class', 'title-head');
+                    typeclient.innerText = 'Type de client';
+                    td3.appendChild(typeclient);
+                    let type = document.createElement('p');
+                    type.setAttribute('class', 'result');
+                    type.innerText = client.client_type;
+                    td3.appendChild(type);
+
+
+
+                    tr2.appendChild(td);
+                    tr2.appendChild(td2);
+                    tr2.appendChild(td3);
+
+                    tr.addEventListener('click', () => {
+                        tr2.style.display = tr2.style.display === 'table-row' ? 'none' : 'table-row';
+                    })
+
+                    tableList.appendChild(tr);
+                    tableList.appendChild(tr2);
+
+
+
+
+
+
+
+                });
+            })
+            .catch(err => console.log(err));
     </script>
 </body>
 

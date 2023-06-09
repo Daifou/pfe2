@@ -219,7 +219,7 @@
         }
 
 
-        .form-container form {
+        .form-container .form {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -236,20 +236,22 @@
             border: black 2px solid;
         }
 
-        .form-container form input,
-        .form-container form button {
+        .form-container .form input,
+        .form-container .form select,
+        .form-container .form button {
             transition: background-color 0.3s ease;
             border: #000 1px solid;
         }
 
-        .form-container form input:focus,
-        .form-container form button:focus {
+        .form-container .form input:focus,
+        .form-container .form select:focus {
             background-color: white;
 
         }
 
-        .form-container form input[type="text"],
-        .form-container form input[type="tel"] {
+        .form-container .form input[type="text"],
+        .form-container .form select,
+        .form-container .form input[type="tel"] {
             background-color: rgba(255, 255, 255, 0.719);
             border: none;
             padding: 5px;
@@ -258,8 +260,8 @@
             border-radius: 8px;
         }
 
-        .form-container form input[type="text"]:focus,
-        .form-container form input[type="tel"]:focus {
+        .form-container .form input[type="text"]:focus,
+        .form-container .form input[type="tel"]:focus {
             background-color: white;
             background-color: white;
         }
@@ -374,12 +376,12 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 700px;
-            height: 529px;
+            height: 85vh;
             z-index: 1000;
 
         }
 
-        .form-container3 form {
+        .form-container3 .form {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -397,13 +399,15 @@
             background-color: rgba(255, 255, 255, 0.719);
         }
 
-        .form-container3 form input,
-        .form-container3 form textarea {
+        .form-container3 .form input,
+        .form-container3 .form textarea {
             transition: background-color 0.3s ease;
             border: #000 2px solid;
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.719);
         }
+
+        
 
         .select-container {
             display: flex;
@@ -435,6 +439,17 @@
 
         .input-container label {
             margin-right: 5px;
+        }
+        header .circle{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #F6F3F2;
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 
@@ -474,7 +489,7 @@
     <img src="background.png" alt="Background Image" class="animated-image">
 
     <div class="form-container">
-        <form>
+        <div class="form">
             <label for="nom">Nom:</label>
             <input type="text" id="nom" name="nom" required>
             <label for="prenom">Prénom:</label>
@@ -483,8 +498,10 @@
             <input type="tel" id="telephone" name="telephone">
             <label for="adresse">Adresse:</label>
             <input type="text" id="adresse" name="adresse">
-            <label for="projet">Projet intéressé:</label>
-            <input type="text" id="projet" name="projet">
+            <label >Projet intéressé:</label>
+            <select>
+                
+            </select>
             <label for="Type de Client">Type de Client:</label>
             <div class="radio-buttons">
                 <label for="acheteur">Acheteur:</label>
@@ -493,7 +510,7 @@
                 <input type="radio" id="potentiel" name="statut" value="potentiel">
             </div>
             <button class="submit" type="submit">Submit</button>
-        </form>
+        </div>
     </div>
     <div class="form-container2">
         <form>
@@ -510,16 +527,18 @@
         </form>
     </div>
     <div id="form1" class="form-container3">
-        <form>
+        <div class="form">
             <label for="nom">Nom de projet:</label>
-            <input type="text" id="nom" name="nom" required>
+            <input type="text" id="nom-projet" name="nom" required>
             <label for="description">Description:</label>
             <textarea style="border: #000 solid 2px;" id="description" name="description" rows="7" cols="50"></textarea>
+            <label for="documents">Photo:</label>
+            <input type="file" id="photo" name="photo" accept="image/png, image/gif, image/jpeg" multiple>
             <label for="documents">Documents:</label>
-            <input style="width: 100%; height: 100px" type="file" id="documents" name="documents" multiple>
+            <input type="file" id="documents" name="documents" accept="application/pdf"  multiple>
             <div class="select-container">
                 <label for="number">n° de Blocs:</label>
-                <select style="border: #000 solid 2px;" id="number" name="nbr_bloc">
+                <select style="border: #000 solid 2px;" id="nbr_bloc" name="nbr_bloc">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -544,7 +563,7 @@
                 </select>
 
                 <label for="number">n° d'etages:</label>
-                <select style="border: #000 solid 2px;" id="number" name="nbr-etage">
+                <select style="border: #000 solid 2px;" id="nbr-etage" name="nbr-etage">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -569,7 +588,7 @@
                 </select>
 
                 <label for="number">n° d'Appartement:</label>
-                <select style="border: #000 solid 2px;" id="number" name="nbr-appart">
+                <select style="border: #000 solid 2px;" id="nbr-appart" name="nbr-appart">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -595,12 +614,12 @@
             </div>
             <div class="select-container">
                 <div class="input-group">
-                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                    <input type="text" id="f2-price" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
                         placeholder="F2" />
                     <span class="currency-symbol">DA</span>
                 </div>
                 <div class="input-group">
-                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                    <input type="text" id="f3-price" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
                         placeholder="F3" />
                     <span class="currency-symbol">DA</span>
                 </div>
@@ -608,24 +627,25 @@
 
             <div class="select-container">
                 <div class="input-group">
-                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                    <input type="text" id="f4-price" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
                         placeholder="F4" />
                     <span class="currency-symbol">DA</span>
                 </div>
                 <div class="input-group">
-                    <input type="text" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
+                    <input type="text" id="f5-price" class="money-input" onkeyup="formatMoneyInput(this)" pattern="\d*"
                         placeholder="F5" />
+                    
                     <span class="currency-symbol">DA</span>
                 </div>
             </div>
             <button type="submit" class="appartement-validation" value="Valide">Submit</button>
 
-        </form>
-    </div>
+        </div>
+        </div>
 
     
     <div id="form2" class="form-container3">
-        <form>
+        <div class="form">
             <div id="formsContainer">
                 <div class="grid-container">
                     <div class="input-container">
@@ -654,11 +674,11 @@
                 </div>
             </div>
             <button style="border: none; background-color:#EEF30F; border:#000 solid 2px;" id="addlocal">Add local</button>
-        </form>
+        </div>
     </div>
     <div id="form3" class="form-container3">
-        <form>
-            <div class="select-container">
+        <div class="form">
+              <div class="select-container">
                 <div id="parkingPlaces">
                     <div>
                         <label for="number">n° place Parking:</label>
@@ -694,8 +714,8 @@
             <button
                 style="border: none; background-color:#EEF30F; border:#000 solid 2px; padding: 3px 8px; border-radius:6px; font-weight:700;"
                 id="addParkingButton">Add Parking Place</button>
-        </form>
-    </div>
+            </div> 
+             </div>
     <h2>Activités récentes</h2>
     <div class="tables-container">
         <div class="table-container">
@@ -721,148 +741,9 @@
     </div>
 
 
-    <script>
+    <script src="homescript.js" type="text/javascript">
 
-        function formatMoneyInput(input) {
-            // Your formatMoneyInput code here
-        }
-
-        $(document).ready(function() {
-            $("#addlocal").on("click", function(event) {
-                event.preventDefault();
-                var width = $("#widthInput").val();
-                var height = $("#heightInput").val();
-                var amount = $("#amountInput").val();
-                var numberOfClients = $("#numberInput").val();
-                var name = $("#nameInput").val();
-
-                console.log("Width:", width);
-                console.log("Height:", height);
-                console.log("Amount:", amount);
-                console.log("Number of Clients:", numberOfClients);
-                console.log("Name:", name);
-            });
-        });
-
-        document.getElementById("addParkingButton").addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent form submission
-
-            var parkingPlacesContainer = document.getElementById("parkingPlaces");
-            var firstParkingPlace = parkingPlacesContainer.firstElementChild;
-            var newParkingPlace = firstParkingPlace.cloneNode(true);
-            newParkingPlace.querySelector("input").value = "";
-
-            // Get the selected numbers in the existing parking places
-            var selectedNumbers = Array.from(parkingPlacesContainer.querySelectorAll("select")).map(function (select) {
-                return select.value;
-            });
-
-            // Remove already selected numbers from the new parking place options
-            var options = newParkingPlace.querySelectorAll("option");
-            options.forEach(function (option) {
-                if (selectedNumbers.includes(option.value)) {
-                    option.disabled = true;
-                } else {
-                    option.disabled = false;
-                }
-            });
-
-            parkingPlacesContainer.appendChild(newParkingPlace);
-        });
-        const button1 = document.querySelector('.button1');
-        const button2 = document.querySelector('.button2');
-        const formContainer = document.querySelector('.form-container');
-        const formContainer2 = document.querySelector('.form-container2');
-
-        button1.addEventListener('click', () => {
-            formContainer.style.display = 'flex';
-        });
-
-        button2.addEventListener('click', () => {
-            formContainer2.style.display = 'flex';
-        });
-
-        formContainer.addEventListener('submit', (event) => {
-            event.preventDefault();
-            formContainer.style.display = 'none';
-        });
-        formContainer2.addEventListener('submit', (event) => {
-            event.preventDefault();
-            formContainer2.style.display = 'none';
-        });
-
-        const musicPlayer = document.getElementById('music-player');
-        const musicPlayerIcon = document.querySelector('.music-player-icon');
-
-        musicPlayerIcon.addEventListener('click', () => {
-            if (musicPlayer.paused) {
-                musicPlayer.play();
-                musicPlayerIcon.classList.add('fa-pause');
-                musicPlayerIcon.classList.remove('fa-play');
-            } else {
-                musicPlayer.pause();
-                musicPlayerIcon.classList.add('fa-play');
-                musicPlayerIcon.classList.remove('fa-pause');
-            }
-        });
-        function showForm(formNumber) {
-            // Hide all form containers
-            const formContainers = document.querySelectorAll('.form-container3');
-            formContainers.forEach(container => {
-                container.style.display = 'none';
-            });
-
-            // Show the selected form container
-            const selectedForm = document.getElementById(`form${formNumber}`);
-            selectedForm.style.display = 'block';
-        }
-
-        document.querySelector(".appartement-validation").addEventListener("click", () => {
-            let nom = document.getElementById('nom-projet').value;
-            let desc = document.getElementById('description').value;
-            let file = document.getElementById('documents');
-            let nbrbloc = document.getElementById('nbr_bloc').value;
-            let nbrEtage = document.getElementById('nbr-etage').value;
-            let nbrAppart = document.getElementById('nbr-appart').value;
-
-            if (
-                nom.length == 0 || desc.length == 0 || file.files.length == 0
-                || nbrbloc.length == 0 || nbrEtage.length == 0 || nbrAppart.length == 0) {
-                alert('Veuillez remplir tous les champs');
-                return;
-            }
-            else {
-
-                let formData = new FormData();
-                formData.append('nom', nom);
-                formData.append('description', desc);
-                formData.append('testImage', file.files[0]);
-                formData.append('nbr_bloc', nbrbloc);
-                formData.append('nbr_etage', nbrEtage);
-                formData.append('nbr_appart', nbrAppart);
-
-                fetch('http://localhost:3000/add-project', {
-                    method: 'POST',
-                    body: formData
-                }).then((response) => {
-                    return response.json();
-                }).then((data) => {
-                    console.log(data);
-                }).catch((error) => {
-                    console.log(error);
-                })
-            }
-
-
-        })
-
-        function formatMoneyInput(input) {
-            let value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-            value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // Add commas every three numbers
-            input.value = value;
-        }
-
-
+        
     </script>
 </body>
 

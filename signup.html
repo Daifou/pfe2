@@ -40,7 +40,7 @@
             text-align: center;
             position: relative;
             width: 40%;
-            height: 460px;
+            height: 70vh;
             background-color: rgb(255, 255, 255);
             padding-top: 60px;
             border: 2px solid black;
@@ -103,7 +103,7 @@
     </video>
 
     <div class="formulaire">
-        <div id="error">Paasword does not match</div> 
+        <div id="error"></div> 
         <div>
             <label for="fullname">Fullname:</label>
             <input type="text" id="fullname" name="fullname"><br><br>
@@ -116,6 +116,13 @@
 
             <label for="repeat-password">Repeat Password:</label>
             <input type="password" id="repeat-password" name="repeat-password"><br><br>
+
+            <label for="type">Type de compte</label>
+            <select name="type" id="type">
+                <option value="">Selectionner un type</option>
+                <option value="Client">Client</option>
+                <option value="Promoteur">Promoteur</option>
+            </select><br><br>
 
             <input type="submit" value="Submit" id="signup">
         </div>

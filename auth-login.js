@@ -11,19 +11,22 @@ document.querySelector('#login').addEventListener('click', () => {
         body: JSON.stringify({email, password})
     }).then(res => {
         if(res.ok)  {
-            res.json()
-            return window.location.href = "home.html"
+           return res.json()
         }
         else{
             document.getElementById("login").disabled = false 
             document.getElementById("error").style.display = "block"
-            console.log(res.json());
         }
     }).then(data => {
-        console.log(data)
+        sessionStorage.setItem('id', data.id);
+        sessionStorage.setItem('fullname', data.fullname);
+        sessionStorage.setItem('email', data.email);
+        sessionStorage.setItem('type', data.type);
+        
+
+        data.type == 'Promoteur' ? window.location.href = "home.html" : window.location.href = "clienthome.html"
     })
     .catch(error => console.log(error))
 
-    console.log(email, password);
 });
 

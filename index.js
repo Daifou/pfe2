@@ -1,4 +1,4 @@
-const fs = require("fs/promises");
+const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const {v4 : uuid} = require("uuid");
@@ -6,9 +6,17 @@ const mysql = require('mysql');
 const multer = require("multer");
 const bodyParser = require('body-parser');
 
-
+let userLogged = {};
 
 const app = express();
+
+
+const imgFolderPath = 'D:\\Desktop\\pfe2\\uploads\\img';
+
+// Check if the img folder exists, if not create it
+if (!fs.existsSync(imgFolderPath)) {
+  fs.mkdirSync(imgFolderPath, { recursive: true });
+}
 
 
 app.use(express.json());
@@ -34,18 +42,23 @@ db.connect((err) => {
     console.log('MySql Connected...');
 });
 
+
+
 app.post('/auth', (req, res) => {
     let {email, password} = req.body;
     let sql = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         if(result.length > 0){
+            userLogged = result[0];
             res.status(200).json(result[0]);
         }else{
             res.status(401).json({"error" : "Wrong username or password"});
         }
     });
-})
+});
+
+
 
 
 app.get('/api/get', (req, res) => {
@@ -60,7 +73,7 @@ app.get('/api/get', (req, res) => {
 
 app.post('/auth/signup', (req, res) => {
     let sql = 'INSERT INTO users SET ?';
-    let post = {fullname: req.body.fullname, email: req.body.email, password: req.body.password}
+    let post = {fullname: req.body.fullname, email: req.body.email, password: req.body.password, type: req.body.type}
 
     let query = db.query(sql, post, (err, result) => {
         if(err) throw err;
@@ -71,13 +84,21 @@ app.post('/auth/signup', (req, res) => {
 });
 
 const Storage = multer.diskStorage({
-    destination: 'uploads',
+    destination: (req, file, cb) =>{
+        if (file.mimetype === 'application/pdf') {
+            cb(null, 'uploads/pdf/');
+          } else {
+            cb(null, 'uploads/img/');
+          }
+    },
     filename: (req, file, cb)=>{
         cb(null, file.originalname);
     },
 });
-const upload = multer({storage: Storage, limits: { fileSize: 2 * 4096 * 4096 },
-}).single('testImage');
+const upload = multer({storage: Storage}).fields([
+        { name: 'document', maxCount: 1 },
+        { name: 'testImage', maxCount: 1 }
+    ]);
 
 
 app.post('/add-project', (req, res) => {
@@ -91,7 +112,13 @@ app.post('/add-project', (req, res) => {
                 project_id: uuid(), 
                 project_name: req.body.nom, 
                 project_desc: req.body.description,
-                project_status: "En Cours"
+                user_id: req.body.uid,
+                project_status: "En Cours",
+                f2_price: req.body.f2_price,
+                f3_price: req.body.f3_price,
+                f4_price: req.body.f4_price,
+                f5_price: req.body.f5_price,
+
             }
             let query = db.query(sql, post, (err, result) => {
                 if(err) throw err;
@@ -101,12 +128,23 @@ app.post('/add-project', (req, res) => {
             let sqlimage = 'INSERT INTO image SET ?';
             let postimage = {
                 id: uuid(),
-                image_url : 'uploads/' + req.file.originalname,
+                image_url : 'uploads/img/' + req.body.img_title,
                 project_id : post.project_id
                 }
             let queryimage = db.query(sqlimage, postimage, (err, result) => {
                 if(err) throw err;
-            })
+            });
+            let postdoc = {
+                doc_id: uuid(),
+                doc_url : 'uploads/pdf/' + req.body.doc_title,
+                project_id : post.project_id
+            }
+            let sqldoc = 'INSERT INTO document SET ?';
+            let querydoc = db.query(sqldoc, postdoc, (err, result) => {
+                if(err) throw err;
+            });
+
+
             
             
             let nbrbloc = parseInt(req.body.nbr_bloc);
@@ -137,6 +175,12 @@ app.post('/add-project', (req, res) => {
                         let sqlappart= 'INSERT INTO appartement SET ?';
                         let postappart = {
                             appartement_id: uuid(),
+                            prix_total: 0,
+                            prix_reste: 0,
+                            surface: 0,
+                            etape_index: 0,
+                            lot: 0,
+                            chambre: 0,
                             appartement_name : `${post.project_name} - Bloc ${i+1} - Etage ${j+1} - Appartement ${k+1}`,
                             etage_id : postetage.etage_id
                         }
@@ -154,18 +198,38 @@ app.post('/add-project', (req, res) => {
     });
     
 
+});
+
+app.post('/add-client', (req, res)=>{
+    let sql = 'INSERT INTO client SET ?';
+    let post = {
+        client_id: uuid(), 
+        client_nom: req.body.nom, 
+        client_prenom: req.body.prenom, 
+        client_phone: req.body.phone,
+        client_adresse: req.body.address, 
+        client_type: req.body.type, 
+        project_id: req.body.project_id,
+        user_id: req.body.user_id,
+        date: new Date(),
+        etape_versement: 0
+    }
+    let query = db.query(sql, post, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
 })
 
-app.get('/get-pending-project', (req, res)=>{
-    let sql = `SELECT * FROM project WHERE project_status = 'En Cours'`;
+app.get('/get-pending-project/:id', (req, res)=>{
+    let sql = `SELECT * FROM project WHERE project_status = 'En Cours' AND user_id = ${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.json(result);
     })
 });
 
-app.get('/get-finished-project', (req, res)=>{
-    let sql = `SELECT * FROM project WHERE project_status = 'Fini'`;
+app.get('/get-finished-project/:id', (req, res)=>{
+    let sql = `SELECT * FROM project WHERE project_status = 'Fini' AND user_id = ${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.json(result);
@@ -178,7 +242,16 @@ app.get('/get-project/:id', (req, res)=>{
         if(err) throw err;
         res.json(result[0]);
     })
-})
+});
+app.get('/get-all-project/:id', (req, res)=>{
+    let sql = `SELECT * FROM project WHERE user_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.status(200).json(result);
+    })
+});
+
+// PUT METHOD 
 
 app.put('/finished-project/:id', (req, res)=>{
     let sql = `UPDATE project SET project_status = 'Fini' WHERE project_id = '${req.params.id}'`;
@@ -193,7 +266,184 @@ app.put('/pending-project/:id', (req, res)=>{
         if(err) throw err;
         res.json(result);
     })
-})
+});
+
+app.get('/get-client/:id', (req, res)=>{
+    let sql = `SELECT client_nom,
+        client_prenom,      
+        client_phone,
+        client_adresse,
+        client_type,
+        project_name,
+        client_id,
+        etape_versement,
+        date
+        FROM client C, users U, project P
+        WHERE C.user_id = U.id
+        AND C.project_id = P.project_id
+        AND C.user_id = '${req.params.id}'`;
+        
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+app.get('/get-client-information/:id', (req, res)=>{
+    let sql = `SELECT client_nom,
+        client_prenom,      
+        client_phone,
+        client_adresse,
+        client_type,
+        project_name,
+        client_id,
+        etape_versement,
+        date
+        FROM client C, users U, project P
+        WHERE C.user_id = U.id
+        AND C.project_id = P.project_id
+        AND C.client_id= '${req.params.id}'`;
+        
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+app.get('/get-bloc/:id', (req, res)=>{
+    
+    let sql = `SELECT * FROM bloc WHERE project_id = '${req.params.id}' ORDER BY bloc_name ASC`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+        
+    
+});
+
+
+app.get('/get-etage/:id', (req, res)=>{
+        
+        let sql = `SELECT * FROM etage WHERE bloc_id = '${req.params.id}' ORDER BY etage_name ASC`;
+        let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+            res.json(result);
+        })
+            
+        
+    }
+);
+
+app.get('/get-appartement/:id', (req, res)=>{
+        
+    let sql = `SELECT * FROM appartement WHERE etage_id = '${req.params.id}' ORDER BY appartement_name ASC`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+        
+    
+}
+);
+app.get('/get-client-project/:id', (req,
+    res)=>{
+            
+            let sql = `SELECT * FROM client 
+            WHERE project_id = '${req.params.id}'
+            AND NOT EXISTS 
+            (SELECT * 
+                FROM appartement
+                WHERE appartement.purchased_by = client.client_id
+                )`;
+            let query = db.query(sql, (err, result) => {
+                if(err) throw err;
+                res.json(result);
+            })
+                
+            
+        }
+);
+
+app.post("/update-appartement/:id", (req, res)=>{
+    let sql = `SELECT ${(req.body.chambre).toLowerCase()}_price AS total FROM project WHERE project_id = '${req.body.project_id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+          result[0].total;
+         let sql2 = `UPDATE appartement SET 
+         purchased_by = '${req.body.client}', 
+         chambre = '${req.body.chambre}', 
+         prix_total = '${result[0].total}', 
+         surface = ${req.body.surface}, 
+         lot = '${req.body.lot}',
+         prix_reste = '${parseInt(result[0].total) * 20 / 100}'
+         WHERE appartement_id = '${req.params.id}'`;
+         let query2 = db.query(sql2, (err, result) => {
+             if(err) throw err;
+             res.json(result);
+         }
+         )
+           
+        
+    });
+
+    
+});
+app.put("/update-reste/:id", (req, res)=>{
+   let sql = `UPDATE appartement SET 
+         prix_reste = ${req.body.prix_reste}
+         WHERE appartement_id = '${req.params.id}'`;
+
+         let query= db.query(sql, (err, result) => {
+             if(err) throw err;
+             res.json(result);
+         }
+         )
+           
+        
+    });
+
+app.post("/update-etape/:id", (req, res)=>{
+    console.log(req.body.client);
+    let sql = `UPDATE appartement SET etape_index = '${req.body.etape}', prix_reste = ${req.body.prix_reste} WHERE appartement_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+    });
+
+    let etape_index = parseInt(req.body.etape)
+        let etape_percent = 0;
+
+    switch(etape_index){
+        case 1:
+            etape_percent = 20;
+            break;
+        case 2:
+            etape_percent = 35;
+            break;
+        case 3:
+            etape_percent = 70;
+            break;
+        case 4:
+            etape_percent = 95;
+            break;
+        case 5:
+            etape_percent = 100;
+            break;
+    
+    }
+    console.log(etape_percent);
+    
+
+    let sql2 = `UPDATE client SET etape_versement = '${etape_percent}' WHERE client_id = '${req.body.client}'`;
+    let query2 = db.query(sql2, (err, result) => {
+        if(err) throw err;
+        console.log(result);
+        res.json(result);
+    })
+    
+}
+);
+
+    
+
 
     
 

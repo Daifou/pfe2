@@ -526,7 +526,7 @@
         // My Code 
         let ul_pending = document.getElementById("allFacets");
         let ul_finished = document.getElementById("userFacets");
-        fetch('http://localhost:3000/get-pending-project')
+        fetch(`http://localhost:3000/get-pending-project/${sessionStorage.getItem('id')}`)
             .then(res => res.json())
             .then(data => {
                 enCoursCount = parseInt(data.length)
@@ -551,7 +551,7 @@
 
                 });
             })
-        fetch('http://localhost:3000/get-finished-project')
+        fetch(`http://localhost:3000/get-finished-project/${sessionStorage.getItem('id')}`)
             .then(res => res.json())
             .then(data => {
                 finiCount = parseInt(data.length)
@@ -644,49 +644,9 @@
                 .disableSelection()
                 .dblclick(function (e) {
                     var item = e.target;
-                    if (e.currentTarget.id === 'allFacets') {
-                        //move from all to user
-
-
-                        $(item).fadeOut('fast', function () {
-                            $(item).appendTo($('#userFacets')).fadeIn('slow');
-                            let elem = $(item).find(".circle");
-                            elem.remove();
-                            $(item).prepend('<div class="circle"><i class="fa-solid fa-check"></i></div>');
-                            fetch(`http://localhost:3000/finished-project/${$(item).attr('id')}`, {
-                                method: 'PUT'
-                            }).then(res => res.text())
-                                .then(res => {
-                                    enCoursCount -= 1;
-                                    finiCount += 1;
-                                    document.querySelector('.facet-container .left label').innerHTML = `En cours ${enCoursCount}`
-                                    document.querySelector('.facet-container .right label').innerHTML = `Fini ${finiCount}`
-                                })
-
-                        });
-
-                    } else {
-
-                        //move from user to all
-                        $(item).fadeOut('fast', function () {
-                            $(item).appendTo($('#allFacets')).fadeIn('slow');
-                            let elem = $(item).find(".circle");
-                            elem.remove();
-                            $(item).prepend('<div class="circle"></div>');
-                            fetch(`http://localhost:3000/pending-project/${$(item).attr('id')}`, {
-                                method: 'PUT'
-                            }).then(res => res.text()) // or res.json()
-                                .then(res => {
-                                    finiCount -= 1;
-                                    enCoursCount += 1;
-                                    document.querySelector('.facet-container .left label').innerHTML = `En cours ${enCoursCount}`
-                                    document.querySelector('.facet-container .right label').innerHTML = `Fini ${finiCount}`
-                                    console.log(res)
-                                }
-                                )
-                        });
-                    }
-
+                    sessionStorage.setItem('current-id', e.target.id);
+                   
+                    window.location.href = "./Blocs.html"
 
                 });
 
