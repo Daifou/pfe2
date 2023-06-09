@@ -177,31 +177,81 @@
             right: 12%;
             width: 250px;
             height: 350px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background-color: #F6F3F2;
             border-radius: 25px;
             font-size: 24px;
             border: black 2px solid;
             transition: top 0.3s ease-in-out;
-        }
-
-        .title:hover {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            max-height: 400px;
+            /* Adjust the maximum height as needed */
+          }
+          
+          .title:hover {
             top: 22%;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
             z-index: 1;
-        }
-
-        .title strong {
+          }
+          
+          .title strong {
             font-weight: bold;
             transition: top 0.3s ease-in-out;
-        }
-
-        .title:hover strong {
+          }
+          
+          .title:hover strong {
             position: relative;
             top: 0;
-        }
+          }
+          
+          .task-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-top: 20px;
+            align-self: flex-start;
+            margin-left: 20px;
+          }
+          
+          .task-checkbox {
+            display: none;
+          }
+          
+          .task-square {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid black;
+            margin-right: 10px;
+          }
+          
+          .task-checkbox:checked + .task-square::after {
+            display: block;
+          }
+          
+          .task-checkbox:checked + .task-square {
+            background-color: #000;
+            color: #fff;
+          }
+          
+          .task-input {
+            width: 80%;
+            padding: 5px;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            background-color: #f6f3f2;
+            margin-left: 10px;
+            flex-grow: 1;
+          }
+          
+          .task-checkbox:checked + .task-square + .task-input {
+            text-decoration: line-through;
+          }
 
         /* New styles for the form */
         .form-container,
@@ -451,6 +501,29 @@
             font-size: 24px;
             font-weight: bold;
         }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            display: inline-block;
+          }
+          
+          .button-container .action-button {
+            padding: 2px 20px;
+            border: none;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+            display: inline-block;
+            white-space: nowrap; /* Prevent line break */
+            margin-top: 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            position: absolute;
+            font-size: 9px;
+            right: 45px;
+            margin-top: 20px;
+            border: #000 solid 1px;
+          }
     </style>
 
 </head>
@@ -471,8 +544,7 @@
         </header>
         <i class="far fa-bell"></i> <!-- Notifications Icon -->
     </div>
-    <audio id="music-player" src="musicbackground.mp3"></audio>
-    <i class="fas fa-music music-player-icon" style="position: absolute; top: 7%; left: 17%;"></i>
+   
     <div class="buttons">
         <div class="button1">
             <a href="#">C</a>
@@ -484,8 +556,16 @@
         </div>
     </div>
     <div class="title">
-        <strong>TO-DO </strong> List
-    </div>
+        <strong>TO-DO</strong> List
+        <div class="task-items">
+          <label class="task-label">
+            <input type="checkbox" class="task-checkbox">
+            <span class="task-square"></span>
+            <input type="text" class="task-input" placeholder="Add a task">
+          </label>
+        </div>
+        <button class="add-task-btn" style="border: none; background-color: #F6F3F2;">Add Task +</button>
+      </div>
     <img src="background.png" alt="Background Image" class="animated-image">
 
     <div class="form-container">

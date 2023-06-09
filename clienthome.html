@@ -2,86 +2,333 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', Arial, sans-serif;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: black; /* Updated background color */
-            overflow-x: hidden;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      /* Updated background color */
+      overflow-x: hidden;
+    }
 
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            margin-top: 10px;
-        }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-top: 10px;
+    }
 
-        .logo img {
-            width: 30px;
-            height: 40px;
-            margin-left: 40px;
-        }
+    .logo img {
+      width: 30px;
+      height: 40px;
+      margin-left: 40px;
+    }
 
-        .login-btn {
-            font-weight: 700;
-            border: white 2px solid; /* Remove border */
-            background-color: transparent; /* Remove background color */
-            color: white; /* Set text color to white */
-            padding: 10px 20px; /* Add padding for better appearance */
-            border-radius: 20px; /* Add rounded border */
-            padding: 0 20px;
-            font-weight: 100;
-        }
+    .login-btn {
+      font-weight: 700;
+      border: white 2px solid;
+      /* Remove border */
+      background-color: transparent;
+      /* Remove background color */
+      color: white;
+      /* Set text color to white */
+      padding: 10px 20px;
+      /* Add padding for better appearance */
+      border-radius: 20px;
+      /* Add rounded border */
+      padding: 0 20px;
+      font-weight: 100;
+      margin-right: 30px;
+    }
 
-        .icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .icons i {
-            margin-right: 30px; /* Updated margin-right for wider space */
-            font-size: 20px;
-            color: white; /* Updated icon color */
-        }
+    .icons i {
+      margin-right: 30px;
+      /* Updated margin-right for wider space */
+      font-size: 20px;
+      color: white;
+      /* Updated icon color */
+    }
 
-        .icons i:hover {
-            color: #ffffff;
-            background-color: black;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-    </style>
+    .icons i:hover {
+      color: #ffffff;
+      background-color: black;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Added styles for the 4 divs */
+    .half {
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .top-half {
+      background-image: url('room.png');
+      /* Add background image */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .bottom-half {
+      background-color: #2b2b2b;
+    }
+
+    .four-divs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      /* Added gap property to control the spacing between grid items */
+      height: calc(60vh - 30px);
+      margin: 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 90px;
+      width: 90%;
+      position: absolute;
+      left: 55px;
+    }
+
+    .four-divs .div {
+      width: 99%;
+      border-radius: 20px;
+      overflow: hidden;
+      /* Added overflow property to hide overflowing content */
+    }
+
+    .content {
+      padding-top: 6px;
+      /* Add padding to create space between the title and paragraph */
+    }
+
+    .content h3 {
+      margin-bottom: 6px;
+      /* Add margin below the title */
+    }
+
+    .top-half {
+      background-image: url('room.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      /* Add relative positioning */
+    }
+
+    .top-half::after {
+      content: "\f004";
+      font-family: "Font Awesome 5 Free";
+      color: black;
+      font-size: 20px;
+      position: absolute;
+      top: 25px;
+      right: -9px;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      padding: 8px 8px;
+      border-radius: 50%;
+    }
+
+    .top-half::after i {
+      color: #000000;
+      /* Set the icon color to black */
+      font-size: 20px;
+      position: absolute;
+    }
+
+    .big-div {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100%;
+      background-color: black;
+      z-index: 9999;
+      transition: right 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      overflow: auto;
+    }
+
+    .big-div.show {
+      right: 0;
+      visibility: visible;
+    }
+
+    .big-div-content {
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Added styles for the images */
+    .big-div-content .image-container {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 500px;
+    }
+
+    .big-div-content .image-container img {
+      width: 400px;
+      height: auto;
+      margin-right: 10px;
+      border-radius: 30px;
+    }
+
+    /* Updated styles for the info list */
+    .big-div-content .info-list {
+      margin-top: 60px;
+      padding-left: 0;
+      list-style: none; /* Remove bullet points */
+    }
+
+    .big-div-content .info-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: black;
+    }
+
+    .big-div-content .info-list li .info-label {
+      font-weight: bold;
+    }
+
+    .big-div-content .info-list li .info-value {
+      font-size: 18px;
+    }
+  </style>
+</head>
 
 <body>
-    <div class="container">
-        <div class="logo"><img src="logoclient.png" alt="Logo"></div>
-        <div class="icons">
-            <i class="far fa-heart"></i>
-            <i class="far fa-bell"></i>
-        </div>
-        <button class="login-btn">Login</button>
+  <div class="container">
+    <div class="logo"><img src="logoclient.png" alt="Logo"></div>
+    <div class="icons">
+      <i class="far fa-heart"></i>
+      <i class="far fa-bell"></i>
     </div>
+    <button class="login-btn">Login</button>
+  </div>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <div class="four-divs">
+    <div class="div">
+      <div class="half top-half" onclick="toggleBigDiv(this)"></div>
+      <div class="half bottom-half">
+        <div class="content">
+          <h3>Titre de projet</h3>
+          <p>Mostaganem, Kharouba</p>
+        </div>
+      </div>
+    </div>
+    <div class="div">
+      <div class="half top-half" onclick="toggleBigDiv(this)"></div>
+      <div class="half bottom-half">
+        <div class="content">
+          <h3>Titre de projet</h3>
+          <p>Mostaganem, Kharouba</p>
+        </div>
+      </div>
+    </div>
+    <div class="div">
+      <div class="half top-half" onclick="toggleBigDiv(this)"></div>
+      <div class="half bottom-half">
+        <div class="content">
+          <h3>Titre de projet</h3>
+          <p>Mostaganem, Kharouba</p>
+        </div>
+      </div>
+    </div>
+    <div class="div">
+      <div class="half top-half" onclick="toggleBigDiv(this)"></div>
+      <div class="half bottom-half">
+        <div class="content">
+          <h3>Titre de projet</h3>
+          <p>Mostaganem, Kharouba</p>
+        </div>
+      </div>
+    </div>
+    <div class="big-div" onclick="toggleBigDiv(this)">
+      <div class="big-div-content">
+        <div class="image-container">
+          <img src="room.png" alt="Big Image">
+          <div>
+            <img src="small-image1.png" alt="Small Image 1">
+            <img src="small-image2.png" alt="Small Image 2">
+          </div>
+        </div>
+        <div class="content">
+          <h3>Titre de projet</h3>
+          <p>Mostaganem, Kharouba</p>
+          <ul class="info-list">
+            <li>
+              <span class="info-label">F2:</span>
+              <span class="info-value">11111 DA</span>
+            </li>
+            <li>
+              <span class="info-label">F3:</span>
+              <span class="info-value">134455 DA</span>
+            </li>
+            <li>
+              <span class="info-label">F4:</span>
+              <span class="info-value">6667 DA</span>
+            </li>
+            <li>
+              <span class="info-label">F5:</span>
+              <span class="info-value">666677 DA</span>
+            </li>
+            <li>
+              <span class="info-label">email:</span>
+              <span class="info-value">example@opp.com</span>
+            </li>
+            <li>
+              <span class="info-label">Phone:</span>
+              <span class="info-value"><button onclick="callNumber()">Call 0675996140</button></span>
+            </li>
+          </ul>
+        </div>
+        <!-- Add your content for the big div here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleBigDiv(element) {
+      const bigDiv = document.querySelector('.big-div');
+      bigDiv.classList.toggle('show');
+    }
+
+    function callNumber() {
+      // Your code for calling the number goes here
+    }
+  </script>
 </body>
 
 </html>

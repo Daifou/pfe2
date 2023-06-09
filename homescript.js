@@ -1,3 +1,80 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const addTaskBtn = document.querySelector('.add-task-btn');
+    const taskItemsContainer = document.querySelector('.task-items');
+  
+    addTaskBtn.addEventListener('click', function() {
+      createNewTaskItem();
+      scrollToBottom();
+    });
+  
+    function createNewTaskItem() {
+      const taskLabel = document.createElement('label');
+      taskLabel.className = 'task-label';
+  
+      const taskCheckbox = document.createElement('input');
+      taskCheckbox.type = 'checkbox';
+      taskCheckbox.className = 'task-checkbox';
+  
+      const taskSquare = document.createElement('span');
+      taskSquare.className = 'task-square';
+  
+      const taskInput = document.createElement('input');
+      taskInput.type = 'text';
+      taskInput.className = 'task-input';
+      taskInput.placeholder = 'Add a task';
+  
+      taskInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          createNewTaskItem();
+          scrollToBottom();
+          this.value = ''; // Reset the input value
+        }
+      });
+  
+      taskLabel.appendChild(taskCheckbox);
+      taskLabel.appendChild(taskSquare);
+      taskLabel.appendChild(taskInput);
+  
+      const taskItemsDiv = document.createElement('div');
+      taskItemsDiv.className = 'task-items';
+      taskItemsDiv.appendChild(taskLabel);
+  
+      taskItemsContainer.appendChild(taskItemsDiv);
+    }
+  
+    function scrollToBottom() {
+      taskItemsContainer.scrollTop = taskItemsContainer.scrollHeight;
+    }
+  });
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const circle = document.querySelector('.circle');
+  
+    circle.addEventListener('click', function() {
+      showButton();
+    });
+  
+    function showButton() {
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = 'button-container';
+  
+      const actionButton = document.createElement('button');
+      actionButton.className = 'action-button';
+      actionButton.textContent = 'Log Out';
+  
+      actionButton.addEventListener('click', function() {
+        window.location.href = 'Login.html'; // Redirect to home.html
+      });
+  
+      buttonContainer.appendChild(actionButton);
+      circle.insertAdjacentElement('afterend', buttonContainer);
+    }
+  });
+
+
 const listProjectForm = document.querySelector('.form-container .form select');
 const valid = document.querySelector('.form-container .form button');
 const id = sessionStorage.getItem('id');
@@ -254,4 +331,7 @@ function formatMoneyInput(input) {
     let value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
     value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // Add commas every three numbers
     input.value = value;
+
+    
 }
+
