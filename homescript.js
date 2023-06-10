@@ -1,52 +1,142 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const addTaskBtn = document.querySelector('.add-task-btn');
-    const taskItemsContainer = document.querySelector('.task-items');
-  
-    addTaskBtn.addEventListener('click', function() {
-      createNewTaskItem();
-      scrollToBottom();
-    });
-  
-    function createNewTaskItem() {
-      const taskLabel = document.createElement('label');
-      taskLabel.className = 'task-label';
-  
-      const taskCheckbox = document.createElement('input');
-      taskCheckbox.type = 'checkbox';
-      taskCheckbox.className = 'task-checkbox';
-  
-      const taskSquare = document.createElement('span');
-      taskSquare.className = 'task-square';
-  
-      const taskInput = document.createElement('input');
-      taskInput.type = 'text';
-      taskInput.className = 'task-input';
-      taskInput.placeholder = 'Add a task';
-  
-      taskInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          createNewTaskItem();
-          scrollToBottom();
-          this.value = ''; // Reset the input value
+let id = sessionStorage.getItem('id');
+let type =  sessionStorage.getItem('type')
+if(!id || type == "Client"){
+
+
+    window.location.href = "403.html"
+
+}
+
+let list = document.querySelector(".task-items");
+fetch(`http://localhost:3000/get-todolist/${id}`).then(res => res.json())
+.then(data => {
+    data.forEach(element => {
+        let taskLabel = document.createElement('label')
+        taskLabel.className = "task-label";
+
+        let taskCheckbox = document.createElement('input');
+        
+      
+        taskCheckbox.setAttribute('type', 'checkbox');
+        taskCheckbox.setAttribute('id', element.todo_id);
+        
+        
+        
+        let p = document.createElement('p')
+        p.className = "task-text";
+        p.innerHTML = element.todo_content;
+        if(element.todo_state == "Terminé"){
+            taskCheckbox.setAttribute("checked", "checked");
+            p.style.textDecoration = "line-through";
         }
-      });
-  
-      taskLabel.appendChild(taskCheckbox);
-      taskLabel.appendChild(taskSquare);
-      taskLabel.appendChild(taskInput);
-  
-      const taskItemsDiv = document.createElement('div');
-      taskItemsDiv.className = 'task-items';
-      taskItemsDiv.appendChild(taskLabel);
-  
-      taskItemsContainer.appendChild(taskItemsDiv);
+        
+        taskLabel.appendChild(taskCheckbox);
+        taskLabel.appendChild(p);
+        taskCheckbox.addEventListener('click', ()=>{
+            if(taskCheckbox.hasAttribute("checked")){
+                
+                taskCheckbox.removeAttribute("checked");
+                p.style.textDecoration = "none";
+                fetch(`http://localhost:3000/update-todolist-pending/${element.todo_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(res =>res.json())
+                .then(data => console.log(data))
+            }
+            else{
+                p.style.textDecoration = "line-through"
+                taskCheckbox.setAttribute("checked", "checked");
+                fetch(`http://localhost:3000/update-todolist-done/${element.todo_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(res =>res.json())
+                .then(data => console.log(data))
+            }
+        })
+
+        list.prepend(taskLabel);
+    });
+
+
+
+});
+document.querySelector(".add-task-btn").addEventListener("click", ()=>{
+    let uuid = uuidv4();
+    let task = document.querySelector(".task-input").value;
+    if(task == ""){
+        alert("Please enter a task")
+        return;
     }
+
+    fetch(`http://localhost:3000/add-todolist/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({uuid, task})
+    }).then(res => res.json())
+    .then(result =>{
+        console.log(result)
+    });
+
+    let taskLabel = document.createElement('label')
+    taskLabel.className = "task-label";
+
+    let taskCheckbox = document.createElement('input');
   
-    function scrollToBottom() {
-      taskItemsContainer.scrollTop = taskItemsContainer.scrollHeight;
-    }
-  });
+    taskCheckbox.setAttribute('type', 'checkbox');
+    taskCheckbox.setAttribute('id', uuid);
+    
+    
+    
+    let p = document.createElement('p')
+    p.className = "task-text";
+    p.innerHTML = task;
+    
+    taskLabel.appendChild(taskCheckbox);
+    taskLabel.appendChild(p);
+    taskCheckbox.addEventListener('click', ()=>{
+        if(taskCheckbox.hasAttribute("checked")){
+            
+            taskCheckbox.removeAttribute("checked");
+            p.style.textDecoration = "none";
+            fetch(`http://localhost:3000/update-todolist-pending/${uuid}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(res =>res.json())
+                .then(data => console.log(data))
+        }
+        else{
+            p.style.textDecoration = "line-through"
+            taskCheckbox.setAttribute("checked", "checked");
+            fetch(`http://localhost:3000/update-todolist-done/${uuid}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }).then(res =>res.json())
+                .then(data => console.log(data))
+        }
+    })
+
+    list.prepend(taskLabel);
+    
+});
+
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+
 
 
 
@@ -66,7 +156,12 @@ document.addEventListener('DOMContentLoaded', function() {
       actionButton.textContent = 'Log Out';
   
       actionButton.addEventListener('click', function() {
-        window.location.href = 'Login.html'; // Redirect to home.html
+        window.location.href = 'Login.html';
+        sessionStorage.removeItem('id')
+        sessionStorage.removeItem('fullname');
+        sessionStorage.removeItem('email');
+        sessionStorage.removeItem('type');
+        // Redirect to home.html
       });
   
       buttonContainer.appendChild(actionButton);
@@ -77,8 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const listProjectForm = document.querySelector('.form-container .form select');
 const valid = document.querySelector('.form-container .form button');
-const id = sessionStorage.getItem('id');
-
+console.log(id);
 const letters = sessionStorage.getItem('fullname');
 document.querySelector('header .circle').innerHTML = letters[0].toUpperCase();
 
@@ -162,43 +256,95 @@ $(document).ready(function () {
         var width = $('#widthInput').val();
         var height = $('#heightInput').val();
         var amount = $('#amountInput').val();
-        var numberOfClients = $('#numberInput').val();
-        var name = $('#nameInput').val();
+        var number = $('#numberInput').val();
+       
+        if(width.length == 0 || height.length == 0 || amount.length == 0){
+            alert("Complete all the field")
+            return;
+        }
 
-        console.log('Width:', width);
-        console.log('Height:', height);
-        console.log('Amount:', amount);
-        console.log('Number of Clients:', numberOfClients);
-        console.log('Name:', name);
-    });
+       fetch(`http://localhost:3000/add-commercial/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                width,
+                height,
+                amount,
+                number
+
+       }) 
+    }).then(res => res.json())
+    .then(result => {
+        alert('Commercial ajouté avec succés')
+        window.location.href = "home.html"
+    })
+})
 });
 
-document.getElementById('addParkingButton').addEventListener('click', function (event) {
-    event.preventDefault(); // Prevent form submission
-
-    var parkingPlacesContainer = document.getElementById('parkingPlaces');
-    var firstParkingPlace = parkingPlacesContainer.firstElementChild;
-    var newParkingPlace = firstParkingPlace.cloneNode(true);
-    newParkingPlace.querySelector('input').value = '';
-
-    // Get the selected numbers in the existing parking places
-    var selectedNumbers = Array.from(parkingPlacesContainer.querySelectorAll('select')).map(function (
-        select,
-    ) {
-        return select.value;
-    });
-
-    // Remove already selected numbers from the new parking place options
-    var options = newParkingPlace.querySelectorAll('option');
-    options.forEach(function (option) {
-        if (selectedNumbers.includes(option.value)) {
-            option.disabled = true;
-        } else {
-            option.disabled = false;
+fetch(`http://localhost:3000/get-parkingPlaces/${id}`)
+.then(response => response.json())
+.then(data => {
+    let parkingPlaces = document.querySelectorAll("#parkingPlaces select")[0]
+    console.log(data);
+    for(let i = 1 ; i <= 20 ; i++){
+        let valid;
+        data.forEach(parkingPlace => {
+            if(i == parkingPlace.parking_number)
+            valid = true;
+        });
+            if(!valid){
+                let option = document.createElement('option');
+                option.setAttribute('value', i);
+                option.innerHTML = i;
+                parkingPlaces.appendChild(option);
+        }
         }
     });
+fetch(`http://localhost:3000/get-client/${id}`)
+.then(response => response.json())
+.then(data => {
+        let clients = document.querySelectorAll("#parkingPlaces select")[1]
+        console.log(data);
+        data.forEach(client => {
+            let option = document.createElement('option');
+            option.setAttribute('value', client.client_id);
+            option.innerHTML = client.client_nom;
+            clients.appendChild(option);
+        });
+    });
+    
+    document.getElementById('addParkingButton').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent form submission
+        let clients = document.querySelectorAll("#parkingPlaces select")[1].value;
+        let parkingPlaceNbr = document.querySelectorAll("#parkingPlaces select")[0].value;
+        let price = document.querySelector("#parkingPrice").value;
 
-    parkingPlacesContainer.appendChild(newParkingPlace);
+        if(clients.length == 0 || parkingPlaceNbr.length == 0 || price.length == 0){
+            alert("Complete all the field")
+            return;
+        }
+        fetch(`http://localhost:3000/add-parkingPlace`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                parkingNbr : parkingPlaceNbr,
+                parkingPrice: price,
+                clientId: clients,
+                userId: id
+        })
+    }).then(res => res.json())
+    .then(result => {
+        alert('Parking ajouté avec succés')
+        window.location.href = "home.html"
+    }
+    )
+
+
+        
 });
 const button1 = document.querySelector('.button1');
 const button2 = document.querySelector('.button2');
@@ -222,20 +368,7 @@ formContainer2.addEventListener('submit', event => {
     formContainer2.style.display = 'none';
 });
 
-const musicPlayer = document.getElementById('music-player');
-const musicPlayerIcon = document.querySelector('.music-player-icon');
 
-musicPlayerIcon.addEventListener('click', () => {
-    if (musicPlayer.paused) {
-        musicPlayer.play();
-        musicPlayerIcon.classList.add('fa-pause');
-        musicPlayerIcon.classList.remove('fa-play');
-    } else {
-        musicPlayer.pause();
-        musicPlayerIcon.classList.add('fa-play');
-        musicPlayerIcon.classList.remove('fa-pause');
-    }
-});
 function showForm(formNumber) {
     // Hide all form containers
     const formContainers = document.querySelectorAll('.form-container3');
@@ -251,6 +384,7 @@ function showForm(formNumber) {
 document.querySelector('.appartement-validation').addEventListener('click', () => {
     let nom = document.getElementById('nom-projet').value;
     let desc = document.getElementById('description').value;
+    let ville = document.getElementById('ville').value;
     let file = document.getElementById('photo');
     let documentpdf = document.getElementById('documents')
     let nbrbloc = document.getElementById('nbr_bloc').value;
@@ -268,8 +402,9 @@ document.querySelector('.appartement-validation').addEventListener('click', () =
 
     if (
         nom.length == 0 ||
+        ville.length == 0 ||
         desc.length == 0 ||
-        file.files.length == 0 ||
+        file.files.length < 3 ||
         documentpdf.files.length == 0 ||
         nbrbloc.length == 0 ||
         nbrEtage.length == 0 ||
@@ -287,12 +422,26 @@ document.querySelector('.appartement-validation').addEventListener('click', () =
         f3Price = f3Price.split(',').join('');
         f4Price = f4Price.split(',').join('');
         f5Price = f5Price.split(',').join('');
+        let titles = [];
 
+        for (let i = 0; i < file.files.length; i++) {
+            titles.push(file.files[i].name);
+        }
+
+        console.log(titles);
         let formData = new FormData();
+
         formData.append('nom', nom);
+        formData.append('ville', ville);
         formData.append('description', desc);
         formData.append('testImage', file.files[0]);
+        formData.append('testImage2', file.files[1]);
+        formData.append('testImage3', file.files[2]);
+        
         formData.append('img_title', file.files[0].name)
+        formData.append('img_title2', file.files[1].name);
+        formData.append('img_title3', file.files[2].name);
+
         formData.append('document', documentpdf.files[0]);
         formData.append('doc_title', documentpdf.files[0].name)
 
@@ -320,9 +469,11 @@ document.querySelector('.appartement-validation').addEventListener('click', () =
             })
             .then(data => {
                 console.log(data);
+
             })
             .catch(error => {
                 console.log(error);
+                alert('erreur: opération no effectué a cause des image')
             });
     }
 });
@@ -335,3 +486,16 @@ function formatMoneyInput(input) {
     
 }
 
+
+    
+    // fetch("http://localhost:3000/add-task", {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         task: task,
+    //         uid: id
+    //     })
+    // })
+    

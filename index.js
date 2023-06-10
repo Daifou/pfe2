@@ -10,6 +10,13 @@ let userLogged = {};
 
 const app = express();
 
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
+ 
+ app.use(cors(corsOptions))
 
 const imgFolderPath = 'D:\\Desktop\\pfe2\\uploads\\img';
 
@@ -61,19 +68,12 @@ app.post('/auth', (req, res) => {
 
 
 
-app.get('/api/get', (req, res) => {
-    let sql = 'SELECT * FROM users';
-    let query = db.query(sql, (err, results) => {
-        if(err) throw err;
-        console.log(results);
-        res.send(results);
-    });
-})
+
 
 
 app.post('/auth/signup', (req, res) => {
     let sql = 'INSERT INTO users SET ?';
-    let post = {fullname: req.body.fullname, email: req.body.email, password: req.body.password, type: req.body.type}
+    let post = {fullname: req.body.fullname, email: req.body.email, password: req.body.password, type: req.body.type, telephone: req.body.ntel}
 
     let query = db.query(sql, post, (err, result) => {
         if(err) throw err;
@@ -97,7 +97,9 @@ const Storage = multer.diskStorage({
 });
 const upload = multer({storage: Storage}).fields([
         { name: 'document', maxCount: 1 },
-        { name: 'testImage', maxCount: 1 }
+        { name: 'testImage', maxCount: 1 },
+        { name: 'testImage2', maxCount: 1 },
+        { name: 'testImage3', maxCount: 1 },
     ]);
 
 
@@ -110,7 +112,8 @@ app.post('/add-project', (req, res) => {
         else{
             let post = {
                 project_id: uuid(), 
-                project_name: req.body.nom, 
+                project_name: req.body.nom,
+                project_ville: req.body.ville,
                 project_desc: req.body.description,
                 user_id: req.body.uid,
                 project_status: "En Cours",
@@ -126,14 +129,35 @@ app.post('/add-project', (req, res) => {
             })
 
             let sqlimage = 'INSERT INTO image SET ?';
-            let postimage = {
-                id: uuid(),
-                image_url : 'uploads/img/' + req.body.img_title,
-                project_id : post.project_id
+
+            
+                let postimage = {
+                    id: uuid(),
+                    image_url : 'uploads/img/' + req.body.img_title,
+                    project_id : post.project_id
                 }
-            let queryimage = db.query(sqlimage, postimage, (err, result) => {
-                if(err) throw err;
-            });
+                let queryimage = db.query(sqlimage, postimage, (err, result) => {
+                    if(err) throw err;
+                });
+            
+                let postimage2 = {
+                    id: uuid(),
+                    image_url : 'uploads/img/' + req.body.img_title2,
+                    project_id : post.project_id
+                }
+                let queryimage2 = db.query(sqlimage, postimage2, (err, result) => {
+                    if(err) throw err;
+                });
+
+                let postimage3= {
+                    id: uuid(),
+                    image_url : 'uploads/img/' + req.body.img_title3,
+                    project_id : post.project_id
+                }
+                let queryimage3= db.query(sqlimage, postimage3, (err, result) => {
+                    if(err) throw err;
+                });
+                
             let postdoc = {
                 doc_id: uuid(),
                 doc_url : 'uploads/pdf/' + req.body.doc_title,
@@ -192,7 +216,7 @@ app.post('/add-project', (req, res) => {
                 
             }
             
-            res.json({...post, ...postimage});
+            res.json({...post});
             
         }
     });
@@ -442,7 +466,147 @@ app.post("/update-etape/:id", (req, res)=>{
 }
 );
 
+app.get('/get-todolist/:id', (req, res)=>{
+    let sql = `SELECT * FROM todolist WHERE user_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+app.post('/add-todolist/:id', (req, res)=>{
+    let sql = `INSERT INTO todolist SET ?`;
+    let body = {
+        todo_id: req.body.uuid,
+        todo_content: req.body.task,
+        todo_state: 'En cours',
+        user_id: req.params.id
+    }
+    let query = db.query(sql, body, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+app.put('/update-todolist-pending/:id', (req, res) =>{
+    let sql = `UPDATE todolist SET todo_state = 'En cours' WHERE todo_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+app.put('/update-todolist-done/:id', (req, res) =>{
+    let sql = `UPDATE todolist SET todo_state = 'Terminé' WHERE todo_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+
+app.post('/add-commercial/:id', (req, res)=>{
+    let sql = `INSERT INTO commercial SET ?`;
+    let body = {
+        commercial_id: uuid(),
+        width: req.body.width,
+        height: req.body.height,
+        amount: req.body.amount.split(',').join(""),
+        user_id: req.params.id
+    }
+
     
+    let query = db.query(sql, body, (err, result) => {
+        if(err) throw err;
+        let nbr = parseInt(req.body.number);
+    let sql2 = `INSERT INTO commercial_local SET ?`;
+    for(let i = 0; i < nbr; i++){
+        let body2 = {
+            commercial_id: body.commercial_id,
+            commercial_local_id: uuid()
+        }
+        let query2 = db.query(sql2, body2, (err, result) => {
+            if(err) throw err;
+        })
+    }
+    })
+    
+})
+    app.get('/get-commercial/:id', (req, res)=>{
+        let sql = `SELECT * FROM commercial WHERE user_id = '${req.params.id}'`;
+        let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+            res.json(result);
+        })
+    });
+    app.get('/get-commercial-local/:id', (req, res)=>{
+        let sql = `SELECT * FROM commercial_local WHERE commercial_id = '${req.params.id}'`;
+        let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+            res.json(result);
+        })
+    });
+
+    app.put('/update-commercial/:id', (req, res)=>{
+        let sql = `UPDATE commercial_local SET  client_id = '${req.body.clientId}' WHERE commercial_local_id = '${req.params.id}'`;
+        let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+            res.json(result);
+        })
+    })
+    
+app.get("/get-parkingPlaces/:id", (req, res)=>{
+    let sql = `SELECT * FROM parking P, client C WHERE P.user_id = '${req.params.id}' AND P.client_id = C.client_id`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+app.post('/add-parkingPlace', (req, res)=>{
+    let sql = `INSERT INTO parking SET ?`;
+    let body = {
+        parking_id: uuid(),
+        parking_number: req.body.parkingNbr,
+        client_id: req.body.clientId,
+        parking_prix: req.body.parkingPrice.split(',').join(""),
+        user_id: req.body.userId
+    }
+    let query = db.query(sql, body, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+app.get('/all-project', (req, res)=>{
+    let sql = `SELECT * FROM project`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    });
+});
+
+app.get("/get-images/:id" , (req, res)=>{
+    let sql = `SELECT * FROM image WHERE project_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    });
+});
+app.get("/get-documents/:id", (req, res)=>{
+    let sql = `SELECT * FROM documents WHERE projet_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    });
+});
+
+app.get('/get-user-info/:id', (req, res)=>{
+    let sql = `SELECT * FROM users WHERE id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+})
 
 
     

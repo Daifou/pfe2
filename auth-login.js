@@ -24,7 +24,7 @@ document.querySelector('#login').addEventListener('click', () => {
         sessionStorage.setItem('type', data.type);
         
 
-        data.type == 'Promoteur' ? window.location.href = "home.html" : window.location.href = "clienthome.html"
+        data.type == 'Promoteur' ? window.location.href = "home.html" : window.location.href = "index.html"
     })
     .catch(error => console.log(error))
 

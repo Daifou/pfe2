@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: black;
+      /* Updated background color */
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-top: 10px;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 40px;
+      margin-left: 40px;
+    }
+
+    .login-btn {
+      font-weight: 700;
+      border: white 2px solid;
+      /* Remove border */
+      background-color: transparent;
+      /* Remove background color */
+      color: white;
+      /* Set text color to white */
+      padding: 10px 20px;
+      /* Add padding for better appearance */
+      border-radius: 20px;
+      /* Add rounded border */
+      padding: 0 20px;
+      font-weight: 100;
+      margin-right: 30px;
+    }
+
+    .icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .icons i {
+      margin-right: 30px;
+      /* Updated margin-right for wider space */
+      font-size: 20px;
+      color: white;
+      /* Updated icon color */
+    }
+
+    .icons i:hover {
+      color: #ffffff;
+      background-color: black;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Added styles for the 4 divs */
+    .half {
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .top-half {
+      /* Add background image */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .bottom-half {
+      background-color: #2b2b2b;
+    }
+
+    .four-divs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      /* Added gap property to control the spacing between grid items */
+      height: calc(60vh - 30px);
+      margin: 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 90px;
+      width: 90%;
+      position: absolute;
+      left: 55px;
+    }
+
+    .four-divs .div {
+      width: 99%;
+      border-radius: 20px;
+      overflow: hidden;
+      /* Added overflow property to hide overflowing content */
+    }
+
+    .content {
+      padding-top: 6px;
+      /* Add padding to create space between the title and paragraph */
+    }
+
+    .content h3 {
+      margin-bottom: 6px;
+      /* Add margin below the title */
+    }
+
+    .top-half {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      /* Add relative positioning */
+    }
+
+    .top-half::after {
+      content: "\f004";
+      font-family: "Font Awesome 5 Free";
+      color: black;
+      font-size: 20px;
+      position: absolute;
+      top: 25px;
+      right: -9px;
+      transform: translate(-50%, -50%);
+      background-color: #ffffff;
+      padding: 8px 8px;
+      border-radius: 50%;
+    }
+
+    .top-half::after i {
+      color: #000000;
+      /* Set the icon color to black */
+      font-size: 20px;
+      position: absolute;
+    }
+
+    .big-div {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100%;
+      background-color: black;
+      z-index: 9999;
+      transition: right 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      overflow: auto;
+    }
+
+    .big-div.show {
+      right: 0;
+      visibility: visible;
+    }
+
+    .big-div-content {
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Added styles for the images */
+    .big-div-content .image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 500px;
+    }
+
+    .big-div-content .image-container img {
+      width: 400px;
+      margin-right: 10px;
+      border-radius: 30px;
+    }
+
+    /* Updated styles for the info list */
+    .big-div-content .info-list {
+      margin-top: 60px;
+      padding-left: 0;
+      list-style: none;
+      /* Remove bullet points */
+    }
+
+    .big-div-content .info-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: black;
+    }
+
+    .big-div-content .info-list li .info-label {
+      font-weight: bold;
+    }
+
+    .big-div-content .info-list li .info-value {
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo"><img src="logoclient.png" alt="Logo"></div>
+    <div class="icons">
+      <i class="far fa-heart"></i>
+      <i class="far fa-bell"></i>
+    </div>
+    <button class="login-btn">Login</button>
+  </div>
+
+  <div class="four-divs">
+
+
+
+    <div class="big-div" onclick="toggleBigDiv(this)">
+      <div class="big-div-content">
+        <div class="image-container">
+          <img src="room.png" alt="Big Image">
+          <div>
+            <img src="small-image1.png" alt="Small Image 1">
+            <img src="small-image2.png" alt="Small Image 2">
+          </div>
+        </div>
+        <div class="content">
+          <h3>Titre de projet</h3>
+          <p>Mostaganem, Kharouba</p>
+          <ul class="info-list">
+            <li>
+              <span class="info-label">F2:</span>
+              <span class="info-value">11111 DA</span>
+            </li>
+            <li>
+              <span class="info-label">F3:</span>
+              <span class="info-value">134455 DA</span>
+            </li>
+            <li>
+              <span class="info-label">F4:</span>
+              <span class="info-value">6667 DA</span>
+            </li>
+            <li>
+              <span class="info-label">F5:</span>
+              <span class="info-value">666677 DA</span>
+            </li>
+            <li>
+              <span class="info-label">email:</span>
+              <span class="info-value">example@opp.com</span>
+            </li>
+            <li>
+              <span class="info-label">Phone:</span>
+              <span class="info-value"><button onclick="callNumber()">Call 0675996140</button></span>
+            </li>
+          </ul>
+        </div>
+        <!-- Add your content for the big div here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('.login-btn').addEventListener('click', function () {
+      window.location.href = "Login.html";
+    });
+    let id = sessionStorage.getItem('id');
+    let type = sessionStorage.getItem('type')
+    if (type == "Client") {
+
+      document.querySelector('.login-btn').innerHTML = "Sign out";
+      document.querySelector('.login-btn').addEventListener('click', function () {
+        sessionStorage.clear();
+        window.location.href = "Login.html";
+      });
+    }
+
+    function toggleBigDiv(element) {
+      const bigDiv = document.querySelector('.big-div');
+      bigDiv.classList.toggle('show');
+    }
+
+
+    fetch('http://localhost:3000/all-project')
+      .then(res => res.json())
+      .then(result => {
+        console.log(result)
+        //   div class="div">
+        //   <div class="half top-half" onclick="toggleBigDiv(this)"></div>
+        //   <div class="half bottom-half">
+        //     <div class="content">
+        //       <h3>Titre de projet</h3>
+        //       <p>Mostaganem, Kharouba</p>
+        //     </div>
+        //   </div>
+        // </div>
+        let div = document.querySelector('.four-divs')
+        result.forEach(element => {
+          fetch(`http://localhost:3000/get-images/${element.project_id}`)
+            .then(res => res.json())
+            .then(img => {
+
+              let div1 = document.createElement('div')
+              div1.classList.add('div')
+
+              let div2 = document.createElement('div')
+              div2.classList.add('half')
+              div2.classList.add('top-half')
+              div2.addEventListener('click', () => {
+                const bigDiv = document.querySelector('.big-div');
+                bigDiv.innerHTML = '';
+                bigDiv.classList.toggle('show');
+                
+                let div3 = document.createElement('div')
+                div3.classList.add('big-div-content')
+                let div4 = document.createElement('div')
+                div4.classList.add('image-container')
+                let img1 = document.createElement('img')
+                img1.src = img[0].image_url
+                let div5 = document.createElement('div')
+                let img2 = document.createElement('img')
+                img2.src = img[1].image_url
+                let img3 = document.createElement('img')
+                img3.src = img[2].image_url
+                let div6 = document.createElement('div')
+                div6.classList.add('content')
+                let h3 = document.createElement('h3')
+                h3.innerHTML = element.project_name
+                let p = document.createElement('p')
+                p.innerHTML = element.project_ville
+                let ul = document.createElement('ul')
+                ul.classList.add('info-list')
+                let li1 = document.createElement('li')
+                let span1 = document.createElement('span')
+                span1.classList.add('info-label')
+                span1.innerHTML = 'F2:'
+                let span2 = document.createElement('span')
+                span2.classList.add('info-value')
+                span2.innerHTML = element.f2_price + " DA"
+                let li2 = document.createElement('li')
+                let span3 = document.createElement('span')
+                span3.classList.add('info-label')
+                span3.innerHTML = 'F3:'
+                let span4 = document.createElement('span')
+                span4.classList.add('info-value')
+                span4.innerHTML = element.f3_price + " DA"
+                let li3 = document.createElement('li')
+                let span5 = document.createElement('span')
+                span5.classList.add('info-label')
+                span5.innerHTML = 'F4:'
+                let span6 = document.createElement('span')
+
+                span6.classList.add('info-value')
+                span6.innerHTML = element.f4_price + " DA"
+                let li4 = document.createElement('li')
+                let span7 = document.createElement('span')
+                span7.classList.add('info-label')
+                span7.innerHTML = 'F5:'
+                let span8 = document.createElement('span')
+                span8.classList.add('info-value')
+                span8.innerHTML = element.f5_price + " DA"
+                let li5 = document.createElement('li')
+                let li6 = document.createElement('li')
+                
+
+                fetch(`http://localhost:3000/get-user-info/${element.user_id}`)
+                .then(res => res.json())
+                .then(info => {
+                  let span9 = document.createElement('span')
+                  span9.classList.add('info-label')
+                  span9.innerHTML = 'email:'
+                  let span10 = document.createElement('span')
+                  span10.classList.add('info-value')
+                  span10.innerHTML = info[0].email
+                  let span11 = document.createElement('span')
+                  span11.classList.add('info-label')
+                  span11.innerHTML = 'Phone:'
+  
+                  let span12 = document.createElement('span')
+                  span12.classList.add('info-value')
+                  span12.innerHTML = info[0].telephone
+
+                  li6.appendChild(span11);
+                  li6.appendChild(span12);
+                  li5.appendChild(span9);
+                  li5.appendChild(span10);
+                })
+                li4.appendChild(span7);
+                li4.appendChild(span8);
+                li3.appendChild(span5);
+                li3.appendChild(span6);
+                li2.appendChild(span3);
+                li2.appendChild(span4);
+                li1.appendChild(span1);
+                li1.appendChild(span2);
+
+                ul.appendChild(li1);
+                ul.appendChild(li2);
+                ul.appendChild(li3);
+                ul.appendChild(li4);
+                ul.appendChild(li5);
+                ul.appendChild(li6);
+
+                div6.appendChild(h3);
+                div6.appendChild(p);
+                div6.appendChild(ul);
+
+                div5.appendChild(img2);
+                div5.appendChild(img3);
+
+                div4.appendChild(img1);
+                div4.appendChild(div5);
+                div4.appendChild(div6);
+
+                div3.appendChild(div4);
+
+                bigDiv.appendChild(div3)
+
+
+                //       <div class="big-div" onclick="toggleBigDiv(this)">
+                //   <div class="big-div-content">
+                //     <div class="image-container">
+                //       <img src="room.png" alt="Big Image">
+                //       <div>
+                //         <img src="small-image1.png" alt="Small Image 1">
+                //         <img src="small-image2.png" alt="Small Image 2">
+                //       </div>
+                //     </div>
+                //     <div class="content">
+                //       <h3>Titre de projet</h3>
+                //       <p>Mostaganem, Kharouba</p>
+                //       <ul class="info-list">
+                //         <li>
+                //           <span class="info-label">F2:</span>
+                //           <span class="info-value">11111 DA</span>
+                //         </li>
+                //         <li>
+                //           <span class="info-label">F3:</span>
+                //           <span class="info-value">134455 DA</span>
+                //         </li>
+                //         <li>
+                //           <span class="info-label">F4:</span>
+                //           <span class="info-value">6667 DA</span>
+                //         </li>
+                //         <li>
+                //           <span class="info-label">F5:</span>
+                //           <span class="info-value">666677 DA</span>
+                //         </li>
+                //         <li>
+                //           <span class="info-label">email:</span>
+                //           <span class="info-value">example@opp.com</span>
+                //         </li>
+                //         <li>
+                //           <span class="info-label">Phone:</span>
+                //           <span class="info-value"><button onclick="callNumber()">Call 0675996140</button></span>
+                //         </li>
+                //       </ul>
+                //     </div>
+                //     <!-- Add your content for the big div here -->
+                //   </div>
+                // </div>
+              })
+
+
+              let div3 = document.createElement('div')
+              div3.classList.add('half')
+              div3.classList.add('bottom-half')
+
+              let div4 = document.createElement('div')
+              div4.classList.add('content')
+
+              let h3 = document.createElement('h3')
+              h3.innerHTML = element.project_name
+
+              let p = document.createElement('p')
+              p.innerHTML = element.project_ville
+
+              div2.style.backgroundImage = `url('${img[0].image_url}')`
+
+              div4.appendChild(h3)
+              div4.appendChild(p)
+              div3.appendChild(div4)
+              div1.appendChild(div2)
+              div1.appendChild(div3)
+              div.appendChild(div1)
+            });
+        })
+
+      })
+  </script>
+</body>
+
+</html>

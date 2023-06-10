@@ -538,6 +538,7 @@
 
                     let div = document.createElement('div')
                     div.setAttribute('class', 'circle')
+                    div.setAttribute("id", element.project_id)
 
 
 
@@ -545,6 +546,7 @@
 
                     let p = document.createElement('p')
                     p.innerHTML = `${element.project_name} - ${element.project_desc}`;
+                    p.setAttribute("id", element.project_id)
                     li.appendChild(p)
 
                     ul_pending.appendChild(li)
@@ -562,7 +564,8 @@
                     li.setAttribute('id', element.project_id)
 
                     let div = document.createElement('div')
-                    div.setAttribute('class', 'circle')
+                    div.setAttribute('class', 'circle');
+                    div.setAttribute("id", element.project_id);
 
                     let i = document.createElement('i')
                     i.setAttribute('class', 'fa-solid fa-check')
@@ -572,6 +575,7 @@
 
                     let p = document.createElement('p')
                     p.innerHTML = `${element.project_name} - ${element.project_desc}`;
+                    p.setAttribute("id", element.project_id)
                     li.appendChild(p)
 
                     ul_finished.appendChild(li)

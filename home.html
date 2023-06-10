@@ -341,7 +341,7 @@
             z-index: 2;
         }
 
-        .form-container2 form {
+        .form-container2 .form {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -524,6 +524,19 @@
             margin-top: 20px;
             border: #000 solid 1px;
           }
+          .task-label p{
+            font-size: 16px;
+            font-weight: 700;
+            margin-left: 15px;
+          }
+          .task-label input[type="text"] {
+            margin-right: 35px;
+            text-align: center;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 2px dashed gray;
+            
+          }
     </style>
 
 </head>
@@ -559,8 +572,6 @@
         <strong>TO-DO</strong> List
         <div class="task-items">
           <label class="task-label">
-            <input type="checkbox" class="task-checkbox">
-            <span class="task-square"></span>
             <input type="text" class="task-input" placeholder="Add a task">
           </label>
         </div>
@@ -593,7 +604,7 @@
         </div>
     </div>
     <div class="form-container2">
-        <form>
+        <div class="form">
             <div class="radio-buttons">
                 <input type="radio" id="radio1" name="radio" value="Option 1" onclick="showForm(1)">
                 <label for="radio1">Appartement</label>
@@ -604,12 +615,14 @@
                 <input type="radio" id="radio3" name="radio" value="Option 3" onclick="showForm(3)">
                 <label for="radio3">Parking</label>
             </div>
-        </form>
+        </div>
     </div>
     <div id="form1" class="form-container3">
         <div class="form">
             <label for="nom">Nom de projet:</label>
             <input type="text" id="nom-projet" name="nom" required>
+            <label for="nom">Vile/Pays:</label>
+            <input type="text" id="ville" name="vile" required>
             <label for="description">Description:</label>
             <textarea style="border: #000 solid 2px;" id="description" name="description" rows="7" cols="50"></textarea>
             <label for="documents">Photo:</label>
@@ -718,7 +731,7 @@
                     <span class="currency-symbol">DA</span>
                 </div>
             </div>
-            <button type="submit" class="appartement-validation" value="Valide">Submit</button>
+            <button class="appartement-validation" value="Valide">Submit</button>
 
         </div>
         </div>
@@ -762,33 +775,13 @@
                 <div id="parkingPlaces">
                     <div>
                         <label for="number">n° place Parking:</label>
-                        <select style="border: #000 solid 2px;" id="number" name="nbr-parking">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                            <option value="21">21</option>
+                        <select style="border: #000 solid 2px;" id="nbr-parking name="nbr-parking">
+                           
                         </select>
-                        <input type="text" id="nameInput" name="name" placeholder="Ajoute un client" />
+                        <select name="client" id="client"></select>
                     </div>
                 </div>
-                <input style="width: 100px;" type="text" id="amountInput" name="amount" onkeyup="formatMoneyInput(this)"
+                <input style="width: 100px;" type="text" id="parkingPrice" name="amount" onkeyup="formatMoneyInput(this)"
                     pattern="\d*" placeholder="Prix" />
             </div>
             <button

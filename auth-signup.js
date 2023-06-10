@@ -1,10 +1,12 @@
 
 
+
 document.querySelector("#signup").addEventListener('click', ()=>{
     const fullname = document.querySelector('input[type="text"]').value;
     const email = document.querySelector('input[type="email"]').value;
     const password = document.querySelectorAll('input[type="password"]')[0].value;
     const password2 = document.querySelectorAll('input[type="password"]')[1].value;
+    const ntel = document.getElementById('n_tel').value;
     const type = document.querySelector('select').value;
     if(password != password2){
         document.getElementById("error").style.display = "block"
@@ -12,7 +14,7 @@ document.querySelector("#signup").addEventListener('click', ()=>{
         return
     }
 
-    if(fullname == '' || email == '' || password == '' || type == ''){
+    if(fullname == '' || email == '' || password == '' || type == '' || ntel == ''){
         document.getElementById("error").style.display = "block"
         document.getElementById("error").innerHTML = "Complete all the fields"
 
@@ -26,7 +28,7 @@ document.querySelector("#signup").addEventListener('click', ()=>{
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({fullname, email, password, type})
+        body: JSON.stringify({fullname, email, password, type, ntel})
     }).then(res => {
         if(res.ok)  {
             res.json()

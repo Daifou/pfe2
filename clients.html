@@ -175,7 +175,7 @@
 
         table tr.expanded-row {
             display: none;
-            
+
         }
 
         table tr.expanded-row td {
@@ -183,17 +183,15 @@
             border-top: none;
         }
 
-        .title-head{
+        .title-head {
             font-size: 20px;
             font-weight: 600;
         }
 
-        .result{
+        .result {
             font-size: 18px;
             font-weight: 400;
         }
-
-        
     </style>
 </head>
 
@@ -226,7 +224,7 @@
                 </tr>
             </thead>
             <tbody>
-               
+
 
                 <!-- Add more rows as needed -->
             </tbody>
@@ -235,7 +233,15 @@
     </div>
 
     <script>
+        
+        const id = sessionStorage.getItem('id')
+        let type = sessionStorage.getItem('type')
+        if (!id || type == "Client") {
 
+
+            window.location.href = "403.html"
+
+        }
         document.addEventListener('DOMContentLoaded', function () {
             const expandableRows = document.getElementsByClassName('expandable-row');
 
@@ -254,7 +260,6 @@
             const row = icon.parentNode.parentNode.nextElementSibling;
             row.classList.toggle('is-expanded');
         }
-        const id = sessionStorage.getItem('id')
         const tableList = document.querySelector('.table-spacing')
 
         fetch(`http://localhost:3000/get-client/${id}`)
@@ -309,10 +314,10 @@
                     projectname.innerText = client.project_name;
 
                     td.appendChild(projectname);
-                    
+
 
                     let td2 = document.createElement('td');
-                    td2.setAttribute('colspan', '2');   
+                    td2.setAttribute('colspan', '2');
 
                     let etapeversement = document.createElement('p');
                     etapeversement.setAttribute('class', 'title-head');
