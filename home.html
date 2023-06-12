@@ -794,20 +794,20 @@
         <div class="table-container">
             <table>
                 <tr>
-                    <th class="separator">Projet1</th>
+                    <th class="separator">None</th>
                 </tr>
                 <tr>
-                    <td>Description1</td>
+                    <td></td>
                 </tr>
             </table>
         </div>
         <div class="table-container">
             <table>
                 <tr>
-                    <th class="separator">Projet2</th>
+                    <th class="separator">None</th>
                 </tr>
                 <tr>
-                    <td>Description2</td>
+                    <td></td>
                 </tr>
             </table>
         </div>
@@ -817,6 +817,39 @@
     <script src="homescript.js" type="text/javascript">
 
         
+    </script>
+    <script>
+        let recentactivity1 = document.querySelectorAll(".table-container th");
+        let recentactivity2 = document.querySelectorAll(".table-container td");
+        let div =  document.querySelectorAll(".table-container");
+
+        fetch(`http://localhost:3000/last-interaction/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                data.forEach(li =>{
+                    if(li.li_step == 1){
+                        recentactivity1[0].innerHTML = li.project_name;
+                        recentactivity2[0].innerHTML = li.project_desc;
+                        div[0].addEventListener('click', ()=>{
+                            sessionStorage.setItem('current-id', li.project_id)
+                            window.location.href = `Blocs.html`
+                        })
+                    }else if(li.li_step == 2){
+                        recentactivity1[1].innerHTML = li.project_name;
+                        recentactivity2[1].innerHTML = li.project_desc;
+                        div[1].addEventListener('click', ()=>{
+                            sessionStorage.setItem('current-id', li.project_id)
+                            window.location.href = `Blocs.html`
+                        })
+                    }
+                })
+            }
+            );
     </script>
 </body>
 

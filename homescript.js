@@ -252,7 +252,6 @@ function formatMoneyInput(input) {
 
 $(document).ready(function () {
     $('#addlocal').on('click', function (event) {
-        event.preventDefault();
         var width = $('#widthInput').val();
         var height = $('#heightInput').val();
         var amount = $('#amountInput').val();
@@ -261,25 +260,24 @@ $(document).ready(function () {
         if(width.length == 0 || height.length == 0 || amount.length == 0){
             alert("Complete all the field")
             return;
-        }
-
-       fetch(`http://localhost:3000/add-commercial/${id}`, {
+        }else{
+         fetch(`http://localhost:3000/add-commercial/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                width,
-                height,
-                amount,
-                number
+            body: JSON.stringify({width,height,amount,number})
+        }).then(res => {
+            if(res.ok)  {
+                return res.json()
+            }
+        }).then(data => {
+            alert("Commercial added successfully")
+            window.location.href = "home.html"
+         })  
+        }
 
-       }) 
-    }).then(res => res.json())
-    .then(result => {
-        alert('Commercial ajouté avec succés')
-        window.location.href = "home.html"
-    })
+       
 })
 });
 

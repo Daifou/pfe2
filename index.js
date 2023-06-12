@@ -78,6 +78,10 @@ app.post('/auth/signup', (req, res) => {
     let query = db.query(sql, post, (err, result) => {
         if(err) throw err;
         console.log(result);
+        
+    
+
+
         res.send('User added...');
     }
     );
@@ -215,7 +219,23 @@ app.post('/add-project', (req, res) => {
                 }
                 
             }
-            
+            let interaction = `DELETE FROM last_interaction WHERE li_step = 2 and user_id = '${req.body.uid}'`;
+            let queryinteraction = db.query(interaction, (err, result) => {
+                if(err) throw err;
+            });
+            let swipeInteraction = `UPDATE last_interaction SET li_step = 2 WHERE li_step = 1 AND user_id = ${req.body.uid}`;
+            let querySwipeInteraction = db.query(swipeInteraction, (err, result) => {
+                if(err) throw err;
+            });
+            let newInteraction = `INSERT INTO last_interaction SET ?`;
+            let postInteraction = {
+                li_step: 1,
+                user_id: req.body.uid,
+                project_id: post.project_id
+            }
+            let queryNewInteraction = db.query(newInteraction, postInteraction, (err, result) => {
+                if(err) throw err;
+            });
             res.json({...post});
             
         }
@@ -229,7 +249,7 @@ app.post('/add-client', (req, res)=>{
     let post = {
         client_id: uuid(), 
         client_nom: req.body.nom, 
-        client_prenom: req.body.prenom, 
+        client_prenom: req.bodY.prenom, 
         client_phone: req.body.phone,
         client_adresse: req.body.address, 
         client_type: req.body.type, 
@@ -249,7 +269,7 @@ app.get('/get-pending-project/:id', (req, res)=>{
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.json(result);
-    })
+    });
 });
 
 app.get('/get-finished-project/:id', (req, res)=>{
@@ -264,8 +284,13 @@ app.get('/get-project/:id', (req, res)=>{
     let sql = `SELECT * FROM project WHERE project_id = '${req.params.id}'`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
+        
+
+
+
+
         res.json(result[0]);
-    })
+    });
 });
 app.get('/get-all-project/:id', (req, res)=>{
     let sql = `SELECT * FROM project WHERE user_id = '${req.params.id}'`;
@@ -527,8 +552,10 @@ app.post('/add-commercial/:id', (req, res)=>{
         }
         let query2 = db.query(sql2, body2, (err, result) => {
             if(err) throw err;
+
         })
     }
+    res.json(result);
     })
     
 })
@@ -602,6 +629,14 @@ app.get("/get-documents/:id", (req, res)=>{
 
 app.get('/get-user-info/:id', (req, res)=>{
     let sql = `SELECT * FROM users WHERE id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
+
+app.get('/last-interaction/:id', (req, res)=>{
+    let sql = `SELECT * FROM last_interaction L, project P WHERE L.user_id = '${req.params.id}' AND L.project_id = P.project_id`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.json(result);
