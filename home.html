@@ -17,7 +17,10 @@
             box-sizing: border-box;
             font-family: 'Poppins', Arial, sans-serif;
         }
-
+        html {
+            zoom: 0.9;
+            transform-origin: top;
+          }
         .music-player-icon {
             position: absolute;
             top: 10px;
@@ -537,6 +540,11 @@
             border: 2px dashed gray;
             
           }
+          .close-button:hover {
+            background-color: red;
+            color: white;
+          }
+          
     </style>
 
 </head>
@@ -578,9 +586,10 @@
         <button class="add-task-btn" style="border: none; background-color: #F6F3F2;">Add Task +</button>
       </div>
     <img src="background.png" alt="Background Image" class="animated-image">
-
+    <div id="notification"></div>
     <div class="form-container">
         <div class="form">
+            <h4 class="close-button" onclick="redirectToHome()" style="position: absolute; right:15px; top:8px; cursor: pointer;">X</h4>
             <label for="nom">Nom:</label>
             <input type="text" id="nom" name="nom" required>
             <label for="prenom">Prénom:</label>
@@ -600,12 +609,13 @@
                 <label for="potentiel">Potentiel:</label>
                 <input type="radio" id="potentiel" name="statut" value="potentiel">
             </div>
-            <button class="submit" type="submit">Submit</button>
+            <button class="submit" type="button" onclick="submitForm()">Submit</button>
         </div>
     </div>
     <div class="form-container2">
         <div class="form">
             <div class="radio-buttons">
+                <h4 class="close-button" onclick="redirectToHome()" style="position: absolute; right:12px; top:3px; cursor: pointer; font-size:15px;">X</h4>
                 <input type="radio" id="radio1" name="radio" value="Option 1" onclick="showForm(1)">
                 <label for="radio1">Appartement</label>
                 <br>
@@ -619,9 +629,10 @@
     </div>
     <div id="form1" class="form-container3">
         <div class="form">
+            <h4 class="close-button" onclick="redirectToHome()" style="position: absolute; right:15px; top:8px; cursor: pointer;">X</h4>
             <label for="nom">Nom de projet:</label>
             <input type="text" id="nom-projet" name="nom" required>
-            <label for="nom">Vile/Pays:</label>
+            <label for="nom">Adresse du projet</label>
             <input type="text" id="ville" name="vile" required>
             <label for="description">Description:</label>
             <textarea style="border: #000 solid 2px;" id="description" name="description" rows="7" cols="50"></textarea>
@@ -642,17 +653,6 @@
                     <option value="3">8</option>
                     <option value="20">9</option>
                     <option value="20">10</option>
-                    <option value="20">11</option>
-                    <option value="20">12</option>
-                    <option value="20">13</option>
-                    <option value="20">14</option>
-                    <option value="20">15</option>
-                    <option value="20">16</option>
-                    <option value="20">17</option>
-                    <option value="20">18</option>
-                    <option value="20">19</option>
-                    <option value="20">20</option>
-                    <option value="20">21</option>
                 </select>
 
                 <label for="number">n° d'etages:</label>
@@ -672,12 +672,6 @@
                     <option value="20">13</option>
                     <option value="20">14</option>
                     <option value="20">15</option>
-                    <option value="20">16</option>
-                    <option value="20">17</option>
-                    <option value="20">18</option>
-                    <option value="20">19</option>
-                    <option value="20">20</option>
-                    <option value="20">21</option>
                 </select>
 
                 <label for="number">n° d'Appartement:</label>
@@ -686,23 +680,6 @@
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="3">4</option>
-                    <option value="3">5</option>
-                    <option value="3">6</option>
-                    <option value="3">7</option>
-                    <option value="3">8</option>
-                    <option value="20">9</option>
-                    <option value="20">10</option>
-                    <option value="20">11</option>
-                    <option value="20">12</option>
-                    <option value="20">13</option>
-                    <option value="20">14</option>
-                    <option value="20">15</option>
-                    <option value="20">16</option>
-                    <option value="20">17</option>
-                    <option value="20">18</option>
-                    <option value="20">19</option>
-                    <option value="20">20</option>
-                    <option value="20">21</option>
                 </select>
             </div>
             <div class="select-container">
@@ -739,6 +716,7 @@
     
     <div id="form2" class="form-container3">
         <div class="form">
+            <h4 class="close-button" onclick="redirectToHome()" style="position: absolute; right:15px; top:8px; cursor: pointer;">X</h4>
             <div id="formsContainer">
                 <div class="grid-container">
                     <div class="input-container">
@@ -771,6 +749,7 @@
     </div>
     <div id="form3" class="form-container3">
         <div class="form">
+            <h4 class="close-button" onclick="redirectToHome()" style="position: absolute; right:15px; top:8px; cursor: pointer;">X</h4>
               <div class="select-container">
                 <div id="parkingPlaces">
                     <div>
@@ -850,6 +829,20 @@
                 })
             }
             );
+            function redirectToHome() {
+                window.location.href = 'home.html';
+              }
+
+              function submitForm() {
+                // Display the notification
+                const notification = document.getElementById('notification');
+                notification.textContent = 'Le client a été ajouté avec succès';
+          
+                // Redirect after a delay
+                setTimeout(function() {
+                  window.location.href = 'home.html';
+                }, 1000); // Delay in milliseconds (1 second)
+              }
     </script>
 </body>
 

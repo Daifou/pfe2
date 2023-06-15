@@ -568,15 +568,63 @@
         background-color: black;
         color: white;
     }
+    .additional-menu {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        padding: 0 20px;
+        width: 100%;
+        margin: 0 auto;
+        position: absolute;
+        top: 190px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    .additional-menu div {
+        transition: border-bottom 0.5s ease;
+        cursor: pointer;
+    }
+
+    .additional-menu div:hover {
+        border-bottom: 2px solid black;
+    }
+
+    /* Additional styles for bold and transparent elements */
+    .bold-transparent {
+        font-weight: bold;
+        opacity: 0.8;
+        font-family: 'Space Mono', monospace;
+    }
+
+    .lift-slide {
+        animation: liftSlide 0.5s ease-out;
+    }
+
+    @keyframes liftSlide {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-50%);
+        }
+        100% {
+            transform: translateY(-70%);
+        }
+    }  
+
 </style>
 
 <body>
     <div class="container">
         <header class="header">
-            <div class="logo"><img src="logologin.png" alt="Logo"></div>
+            <div class="logo">
+                <a href="home.html">
+                    <img src="logologin.png" alt="Logo">
+                </a>
+            </div>
             <div class="menu-items">
-                <div>Projects</div>
-                <div>Clients</div>
+                <div onclick="window.location.href = 'Projets.html';">Projects</div>
+                <div onclick="window.location.href = 'clients.html';">Clients</div>
             </div>
             <div class="circle"></div>
         </header>
@@ -585,6 +633,11 @@
             <i class="fas fa-search search-icon"></i>
             <input type="text" placeholder="Search" />
         </div>
+        <div class="additional-menu">
+            <div id="Appartement" class="bold-transparent" onclick="redirectToLocalCom3('Appartement')">Appartement</div>
+            <div id="commercial" class="bold-transparent" onclick="redirectToLocalCom()">Commercial</div>
+            <div id="parking" class="bold-transparent" onclick="redirectToLocalCom2('parking')">Parking</div>
+        
         <div class="blocs">
 
 
@@ -822,6 +875,29 @@
 
                 })
             })
+            function redirectToLocalCom() {
+                var element = document.getElementById("commercial");
+                element.classList.add("lift-slide");
+                setTimeout(function () {
+                    window.location.href = "localcom.html";
+                }, 500); // Adjust the delay to match the animation duration
+            }
+            
+            function redirectToLocalCom2() {
+                var element = document.getElementById("parking");
+                element.classList.add("lift-slide");
+                setTimeout(function () {
+                    window.location.href = "parking.html";
+                }, 500); // Adjust the delay to match the animation duration
+            }
+    
+            function redirectToLocalCom3() {
+                var element = document.getElementById("Appartement");
+                element.classList.add("lift-slide");
+                setTimeout(function () {
+                    window.location.href = "Projets.html";
+                }, 500); // Adjust the delay to match the animation duration
+            }
 
     </script>
 </body>
