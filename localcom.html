@@ -246,16 +246,14 @@
 
     .big-div {
         position: absolute;
-        top: 15.8%;
-        right: 0;
-        width: 60%;
+        
         background-image: url(menubackground.png);
         background-color: rgba(12, 3, 3, 0.418);
         z-index: 9999;
         display: none;
         border: #000 solid 1.5px;
         padding: 20px;
-        height: 120%;
+        height: 100vh;
         overflow-y: scroll;
         overflow-x: hidden;
 
@@ -812,6 +810,8 @@
                                                 .then(res => res.json())
                                                 .then((result) => {
                                                     console.log(result);
+                                                    alert("Commerce affecté");
+                                                    window.location.reload();
 
                                                 })
                                         })

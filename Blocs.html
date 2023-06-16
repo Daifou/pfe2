@@ -779,6 +779,27 @@
         float: left;
         margin: 0 1em 1em 0;
     }
+    .delete{
+        position: absolute;
+        top: 27vh;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgb(129, 12, 12);
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 900;
+        transition: all .2s ease-in-out;
+
+    }
+    .delete:hover{
+        background: #fff;
+        color: rgb(129, 12, 12);
+        border: 1px solid rgb(129, 12, 12);
+    }
 </style>
 
 <body>
@@ -796,6 +817,7 @@
             <i class="fas fa-search search-icon"></i>
             <input type="text" placeholder="Search" />
         </div>
+        <button onclick="deleteProject()" class="delete">Delete</button>
         <div class="blocs">
         </div>
     </div>
@@ -865,42 +887,11 @@
                 </div>
             </div>
         </div>
-        <!--
-          <div class="medium-square">
-            <div class="left-elements">
-              <div class="num">N°: 01</div>
-              <select class="f">
-                <option value="F2">F2</option>
-                <option value="F3" selected>F3</option>
-                <option value="F4">F4</option>
-                <option value="F5">F5</option>
-              </select>
-              <div class="surface">123 m²</div>
-              <div class="lot">LOT</div>
-            </div>
-            <div class="right-elements">
-              <div class="label">Label:</div>
-              <input type="text" class="input-field">
-            </div>
-          </div> -->
+        
     </div>
     </div>
 
-    <div id="mediumDiv" style="display: none;">
-        <div class="circle">A</div>
-        <h3 class="name">Abass A</h3>
-        <div class="price">Prix: 150000</div>
-        <div class="paid">Payé: 120000 DA</div>
-        <div class="remaining">Rest: 30000</div>
-    </div>
-    <div id="mediumDiv" style="display: none;">
-        <div class="circle">A</div>
-        <h3 class="name">Abass A</h3>
-        <div class="price">Prix: 150000</div>
-        <div class="paid">Payé: 120000 DA</div>
-        <div class="remaining">Rest: 30000</div>
-
-    </div>
+  
 
     <!-- <h1>Pure CSS modal box</h1>
     <div>
@@ -960,11 +951,24 @@
         console.log(sessionStorage.getItem('current-id'));
 
         var currentId = sessionStorage.getItem('current-id');
+        document.querySelector(".delete").setAttribute("id", currentId);
+
+
         let blocCount = 1;
         fetch(`http://localhost:3000/get-bloc/${currentId}`)
             .then(res => res.json())
             .then(data => {
+                data.sort((a, b) => {
+                    // Extract the numbers using regular expressions
+                    const regex = /(\d+)/;
+                    const numberA = parseInt(a.bloc_name.match(regex)[1]);
+                    const numberB = parseInt(b.bloc_name.match(regex)[1]);
+
+                    // Compare the numbers
+                    return numberA - numberB;
+                });
                 data.forEach(bloc => {
+
                     let rectangals = document.createElement('div');
                     rectangals.classList.add('rectangals');
                     let circleLabel = document.createElement('div');
@@ -981,7 +985,10 @@
                         .then(res => {
                             let cylinderContainer = document.createElement('div');
                             cylinderContainer.classList.add('cylinder-container');
-                            res.forEach((etage, i) => {
+                            let data = res;
+
+
+                            data.forEach((etage, i) => {
                                 let cylinder = document.createElement('div');
                                 cylinder.classList.add('cylinder');
                                 cylinder.setAttribute('id', etage.etage_id)
@@ -1483,36 +1490,6 @@
             div.appendChild(square2)
 
 
-            //     <div class="medium-square" style="flex-direction: row;">
-            //     <div class="left-elements">
-            //       <div class="num">LPP - Bloc 1 - Etage 1 - Appart N=°1</div>
-            //       <div class="f">F3 3</div>
-            //       <div class="surface" contenteditable>123 m²</div>
-            //       <div class="lot" contenteditable>LOT</div>
-            //     </div>
-            //     <div class="right-elements">
-            //       <div class="newcylinder1" onclick="showMediumDiv(0)">
-            //         <span class="left-text">Commende</span>
-            //         <span class="right-text">20%</span>
-            //       </div>
-            //       <div class="newcylinder2" onclick="showMediumDiv(1)">
-            //         <span class="left-text">Fondation</span>
-            //         <span class="right-text">20%</span>
-            //       </div>
-            //       <div class="newcylinder3" onclick="showMediumDiv(2)">
-            //         <span class="left-text">Break + Biton</span>
-            //         <span class="right-text">20%</span>
-            //       </div>
-            //       <div class="newcylinder4" onclick="showMediumDiv(3)">
-            //         <span class="left-text">Finie</span>
-            //         <span class="right-text">20%</span>
-            //       </div>
-            //       <div class="newcylinder5" onclick="showMediumDiv(4)">
-            //         <span class="left-text">Cle</span>
-            //         <span class="right-text">20%</span>
-            //       </div>
-            //     </div>
-            //   </div>
             bigDiv.appendChild(div)
         }
         document.querySelector(".modal__inner button").addEventListener("click", () => {
@@ -1588,7 +1565,25 @@
 
             }
 
-        })
+        });
+
+        function deleteProject(){
+            let projectId = document.querySelector(".delete").getAttribute("id")
+            fetch(`http://localhost:3000/delete-project/${projectId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(data => {
+                    alert("Projet supprimé");
+                    window.location.href = "Projets.html";
+                }).catch(err =>{
+                    console.log(err);
+
+                })
+                
+        }
 
         function showMediumDiv(cylinderNumber) {
             var mediumDiv = document.getElementById("mediumDiv");

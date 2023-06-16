@@ -249,7 +249,7 @@ app.post('/add-client', (req, res)=>{
     let post = {
         client_id: uuid(), 
         client_nom: req.body.nom, 
-        client_prenom: req.bodY.prenom, 
+        client_prenom: req.body.prenom, 
         client_phone: req.body.phone,
         client_adresse: req.body.address, 
         client_type: req.body.type, 
@@ -620,7 +620,7 @@ app.get("/get-images/:id" , (req, res)=>{
     });
 });
 app.get("/get-documents/:id", (req, res)=>{
-    let sql = `SELECT * FROM documents WHERE projet_id = '${req.params.id}'`;
+    let sql = `SELECT * FROM document WHERE project_id = '${req.params.id}'`;
     let query = db.query(sql, (err, result) => {
         if(err) throw err;
         res.json(result);
@@ -641,6 +641,65 @@ app.get('/last-interaction/:id', (req, res)=>{
         if(err) throw err;
         res.json(result);
     })
+});
+
+app.delete('/delete-project/:id', (req, res)=>{
+    let sql = `DELETE FROM project WHERE project_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+    })
+
+    let sql2 = `DELETE FROM image WHERE project_id = '${req.params.id}'`;
+    let query2 = db.query(sql2, (err, result) => {
+        if(err) throw err;
+    })
+
+    let sql3 = `DELETE FROM document WHERE project_id = '${req.params.id}'`;
+    let query3 = db.query(sql3, (err, result) => {
+        if(err) throw err;
+    })
+    
+    let sql4 = `DELETE FROM last_interaction WHERE project_id = '${req.params.id}'`;
+    let query4 = db.query(sql4, (err, result) => {
+        if(err) throw err;
+    });
+    let sql5 = `DELETE FROM bloc WHERE project_id = '${req.params.id}'`;
+    let query5 = db.query(sql5, (err, result) => {
+        if(err) throw err;
+    });
+
+    let sql6 = `DELETE FROM client WHERE project_id = '${req.params.id}'`;
+    let query6 = db.query(sql6, (err, result) => {
+        if(err) throw err;
+    });
+    res.json({msg: "success"})
+});
+
+app.delete('/delete-client/:id', (req, res)=>{
+    let sql = `DELETE FROM client WHERE client_id = '${req.params.id}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+    });
+
+    let sql2 = `DELETE FROM parking WHERE client_id = '${req.params.id}'`;
+    let query2 = db.query(sql2, (err, result) => {
+        if(err) throw err;
+    });
+
+    let sql3 = `UPDATE commercial_local SET client_id = NULL WHERE client_id = '${req.params.id}'`;
+    let query3 = db.query(sql3, (err, result) => {
+        if(err) throw err;
+    })
+
+    let sql4 = `UPDATE appartement SET purchased_by = NULL, prix_total = 0, prix_reste = 0, etape_index = 0, surface = 0, lot = '0', chambre = '0' WHERE purchased_by='${req.params.id}'`;
+    let query4 = db.query(sql4, (err, result) => {
+        if(err) throw err;
+    })
+
+    res.json({msg: 'success'});
+
+
+
 })
 
 

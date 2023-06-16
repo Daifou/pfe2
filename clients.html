@@ -192,6 +192,23 @@
             font-size: 18px;
             font-weight: 400;
         }
+        .delete{
+            background-color: rgb(129, 12, 12);
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            outline: none;
+            border: 1px solid rgb(129, 12, 12);
+            margin: 10px;
+            cursor: pointer;
+            font-weight: 900;
+            transition: all .2s ease-in-out;
+        }
+        .delete:hover{
+        background: #fff;
+        color: rgb(129, 12, 12);
+
+    }
     </style>
 </head>
 
@@ -289,6 +306,25 @@
                     let date = document.createElement('td');
                     date.innerText = new Date(client.date).toLocaleDateString('en-GB');
 
+                    let button = document.createElement('button');
+                    button.setAttribute('class', 'delete');
+                    button.innerText = "Delete"
+
+                    button.addEventListener('click', ()=>{
+                        fetch(`http://localhost:3000/delete-client/${client.client_id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                id: client.client_id
+                            })
+                        }).then(response => response.json())
+                            .then(data => {
+                                alert("Client supprimé")
+                                window.location.reload()
+                            })
+                    })
 
 
                     tr.appendChild(icon);
@@ -296,6 +332,8 @@
                     tr.appendChild(numero);
                     tr.appendChild(email);
                     tr.appendChild(date);
+                    tr.appendChild(button);
+
 
                     let tr2 = document.createElement('tr')
                     tr2.setAttribute('class', 'expanded-row');
