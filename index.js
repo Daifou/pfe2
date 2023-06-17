@@ -700,6 +700,18 @@ app.delete('/delete-client/:id', (req, res)=>{
 
 
 
+});
+
+
+app.post('/is-exist-name', (req, res)=>{
+    let sql = `SELECT * FROM project WHERE project_name = '${req.body.name}'`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        else if(result.length > 0)
+            res.json({exist: true});
+        else
+            res.json({exist: false});
+    })
 })
 
 

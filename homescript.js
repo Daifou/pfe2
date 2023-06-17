@@ -394,86 +394,101 @@ document.querySelector('.appartement-validation').addEventListener('click', () =
     let f4Price = document.getElementById('f4-price').value;
     let f5Price = document.getElementById('f5-price').value;
 
-
+    fetch('http://localhost:3000/is-exist-name', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: nom
+            })
+    }).then(data => data.json())
+    .then(result =>{
+        if(result.exist)
+            alert('Le nom de projet deja existe')
+        else{
+            if (
+                nom.length == 0 ||
+                ville.length == 0 ||
+                desc.length == 0 ||
+                file.files.length < 3 ||
+                documentpdf.files.length == 0 ||
+                nbrbloc.length == 0 ||
+                nbrEtage.length == 0 ||
+                nbrAppart.length == 0 ||
+                f2Price.length == 0 ||
+                f3Price.length == 0 ||
+                f4Price.length == 0 ||
+                f5Price.length == 0
+        
+            ) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            } else {
+                f2Price = f2Price.split(',').join('');
+                f3Price = f3Price.split(',').join('');
+                f4Price = f4Price.split(',').join('');
+                f5Price = f5Price.split(',').join('');
+                let titles = [];
+        
+                for (let i = 0; i < file.files.length; i++) {
+                    titles.push(file.files[i].name);
+                }
+        
+                console.log(titles);
+                let formData = new FormData();
+        
+                formData.append('nom', nom);
+                formData.append('ville', ville);
+                formData.append('description', desc);
+                formData.append('testImage', file.files[0]);
+                formData.append('testImage2', file.files[1]);
+                formData.append('testImage3', file.files[2]);
+                
+                formData.append('img_title', file.files[0].name)
+                formData.append('img_title2', file.files[1].name);
+                formData.append('img_title3', file.files[2].name);
+        
+                formData.append('document', documentpdf.files[0]);
+                formData.append('doc_title', documentpdf.files[0].name)
+        
+        
+                formData.append('nbr_bloc', nbrbloc);
+                formData.append('nbr_etage', nbrEtage);
+                formData.append('nbr_appart', nbrAppart);
+                formData.append('uid', id);
+        
+                formData.append('f2_price', f2Price);
+                formData.append('f3_price', f3Price);
+                formData.append('f4_price', f4Price);
+                formData.append('f5_price', f5Price);
+        
+        
+        
+        
+                console.log(f2Price);
+                fetch('http://localhost:3000/add-project', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+        
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        alert('erreur: opération no effectué a cause des image')
+                    });
+            }
+        }
+    })
 
     
 
-    if (
-        nom.length == 0 ||
-        ville.length == 0 ||
-        desc.length == 0 ||
-        file.files.length < 3 ||
-        documentpdf.files.length == 0 ||
-        nbrbloc.length == 0 ||
-        nbrEtage.length == 0 ||
-        nbrAppart.length == 0 ||
-        f2Price.length == 0 ||
-        f3Price.length == 0 ||
-        f4Price.length == 0 ||
-        f5Price.length == 0
-
-    ) {
-        alert('Veuillez remplir tous les champs');
-        return;
-    } else {
-        f2Price = f2Price.split(',').join('');
-        f3Price = f3Price.split(',').join('');
-        f4Price = f4Price.split(',').join('');
-        f5Price = f5Price.split(',').join('');
-        let titles = [];
-
-        for (let i = 0; i < file.files.length; i++) {
-            titles.push(file.files[i].name);
-        }
-
-        console.log(titles);
-        let formData = new FormData();
-
-        formData.append('nom', nom);
-        formData.append('ville', ville);
-        formData.append('description', desc);
-        formData.append('testImage', file.files[0]);
-        formData.append('testImage2', file.files[1]);
-        formData.append('testImage3', file.files[2]);
-        
-        formData.append('img_title', file.files[0].name)
-        formData.append('img_title2', file.files[1].name);
-        formData.append('img_title3', file.files[2].name);
-
-        formData.append('document', documentpdf.files[0]);
-        formData.append('doc_title', documentpdf.files[0].name)
-
-
-        formData.append('nbr_bloc', nbrbloc);
-        formData.append('nbr_etage', nbrEtage);
-        formData.append('nbr_appart', nbrAppart);
-        formData.append('uid', id);
-
-        formData.append('f2_price', f2Price);
-        formData.append('f3_price', f3Price);
-        formData.append('f4_price', f4Price);
-        formData.append('f5_price', f5Price);
-
-
-
-
-        console.log(f2Price);
-        fetch('http://localhost:3000/add-project', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-
-            })
-            .catch(error => {
-                console.log(error);
-                alert('erreur: opération no effectué a cause des image')
-            });
-    }
+    
 });
 
 function formatMoneyInput(input) {

@@ -386,6 +386,7 @@
                 span8.innerHTML = element.f5_price + " DA"
                 let li5 = document.createElement('li')
                 let li6 = document.createElement('li')
+                let li7 = document.createElement('li')
                 
 
                 fetch(`http://localhost:3000/get-user-info/${element.user_id}`)
@@ -405,10 +406,28 @@
                   span12.classList.add('info-value')
                   span12.innerHTML = info[0].telephone
 
+                  let span13 = document.createElement('span')
+                  span13.classList.add('info-label')
+                  span13.innerHTML = "Fiche techenique";
+
+                  fetch(`http://localhost:3000/get-documents/${element.project_id}`)
+                  .then(res => res.json())
+                  .then(doc => {
+                    let span14 = document.createElement('span')
+                    span14.classList.add('info-value')
+                    let downloadLink = document.createElement('a');
+                    downloadLink.href = doc[0].doc_url;
+                    downloadLink.target = '_blank';
+                    downloadLink.innerHTML = "Telecharger";
+                    span14.appendChild(downloadLink);
+
+                  li7.appendChild(span13);
+                  li7.appendChild(span14);
                   li6.appendChild(span11);
                   li6.appendChild(span12);
                   li5.appendChild(span9);
                   li5.appendChild(span10);
+                  })
                 })
                 li4.appendChild(span7);
                 li4.appendChild(span8);
@@ -425,6 +444,7 @@
                 ul.appendChild(li4);
                 ul.appendChild(li5);
                 ul.appendChild(li6);
+                ul.appendChild(li7);
 
                 div6.appendChild(h3);
                 div6.appendChild(p);
