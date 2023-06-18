@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
@@ -192,7 +193,8 @@
             font-size: 18px;
             font-weight: 400;
         }
-        .delete{
+
+        .delete {
             background-color: rgb(129, 12, 12);
             color: white;
             border-radius: 5px;
@@ -204,11 +206,105 @@
             font-weight: 900;
             transition: all .2s ease-in-out;
         }
-        .delete:hover{
-        background: #fff;
-        color: rgb(129, 12, 12);
 
-    }
+        .delete:hover {
+            background: #fff;
+            color: rgb(129, 12, 12);
+
+        }
+
+        .edit {
+            background-color: rgb(70, 48, 169);
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+            outline: none;
+            border: 1px solid rgb(70, 48, 169);
+            margin: 10px;
+            cursor: pointer;
+            font-weight: 900;
+            transition: all .2s ease-in-out;
+        }
+
+        .edit:hover {
+            background: #fff;
+            color: rgb(70, 48, 169);
+
+        }
+
+        .modal {
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .modal .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(246, 243, 242, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: black 2px solid;
+        }
+
+        .modal .form input,
+        .modal .form select,
+        .modal .form button {
+            transition: background-color 0.3s ease;
+            border: #000 1px solid;
+        }
+
+        .modal .form input:focus,
+        .modal .form select:focus {
+            background-color: white;
+
+        }
+
+        .modal .form input[type="text"],
+        .modal .form select,
+        .modal .form input[type="tel"] {
+            background-color: rgba(255, 255, 255, 0.719);
+            border: none;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: #000 2px solid;
+            border-radius: 8px;
+        }
+
+        .modal .form input[type="text"]:focus,
+        .modal .form input[type="tel"]:focus {
+            background-color: white;
+            background-color: white;
+        }
+
+        .submit,
+        .appartement-validation {
+            padding: 10px 20px;
+            background-color: #EEF30F;
+            border: none;
+            border-radius: 5px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            border: #000 solid 2px;
+        }
     </style>
 </head>
 
@@ -248,11 +344,55 @@
         </table>
 
     </div>
+    <div class="modal">
+        <div class="form">
+            <h4 class="close-button" onclick="redirectToHome()"
+                style="position: absolute; right:15px; top:8px; cursor: pointer;">X</h4>
+            <label for="nom">Nom:</label>
+            <input type="text" id="nomField" name="nom" required>
+            <label for="prenom">Prénom:</label>
+            <input type="text" id="prenomField" name="prenom" required>
+            <label for="telephone">Numéro de téléphone:</label>
+            <input type="tel" id="telephoneField" name="telephone">
+            <label for="adresse">Adresse:</label>
+            <input type="text" id="adresseField" name="adresse">
+            <label>Projet intéressé:</label>
+            <select>
+
+            </select>
+            <label for="Type de Client">Type de Client:</label>
+            <div class="radio-buttons">
+                <label for="acheteur">Acheteur:</label>
+                <input type="radio" id="acheteur" name="statut" value="acheteur">
+                <label for="potentiel">Potentiel:</label>
+                <input type="radio" id="potentiel" name="statut" value="potentiel">
+            </div>
+            <button class="submit" type="button" id="submit">Submit</button>
+        </div>
+    </div>
 
     <script>
-        
         const id = sessionStorage.getItem('id')
         let type = sessionStorage.getItem('type')
+
+        let modal = document.querySelector('.modal');
+        let listProjectForm = document.querySelector('.modal .form select')
+        function redirectToHome() {
+            modal.style.display = 'none'
+        }
+
+        fetch(`http://localhost:3000/get-all-project/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                data.forEach(project => {
+                    let option = document.createElement('option');
+                    option.setAttribute('value', project.project_id);
+                    option.innerHTML = project.project_name;
+                    listProjectForm.appendChild(option);
+                });
+            })
+            .catch(err => console.log(err));
         if (!id || type == "Client") {
 
 
@@ -310,7 +450,7 @@
                     button.setAttribute('class', 'delete');
                     button.innerText = "Delete"
 
-                    button.addEventListener('click', ()=>{
+                    button.addEventListener('click', () => {
                         fetch(`http://localhost:3000/delete-client/${client.client_id}`, {
                             method: 'DELETE',
                             headers: {
@@ -324,7 +464,66 @@
                                 alert("Client supprimé")
                                 window.location.reload()
                             })
+                    });
+
+                    let buttonEdit = document.createElement("button");
+                    buttonEdit.classList.add('edit');
+                    buttonEdit.innerHTML = "Edit"
+
+                    buttonEdit.addEventListener('click', () => {
+                        modal.style.display = "flex";
+                        document.getElementById('nomField').setAttribute("value", client.client_nom);
+                        document.getElementById('prenomField').setAttribute("value", client.client_prenom);
+                        document.getElementById('telephoneField').setAttribute("value", client.client_phone);
+                        document.getElementById('adresseField').setAttribute("value", client.client_adresse);
+                        $(".modal .form select").val(client.project_id);
+                        document.getElementById('acheteur').checked = client.client_type == "acheteur" ? true : false;
+                        document.getElementById('potentiel').checked = client.client_type == "potentiel" ? true : false;
+
+                        document.getElementById('submit').addEventListener('click', () => {
+                            let nom = document.getElementById('nomField').value;
+                            let prenom = document.getElementById('prenomField').value;
+                            let telephone = document.getElementById('telephoneField').value;
+                            let adresse = document.getElementById('adresseField').value;
+                            let projet = document.querySelector('.modal .form select').value;
+                            let type = document.querySelector('.modal .form input[name="statut"]:checked').value;
+
+                            if(parseInt(client.etape_versement) != 0 && projet != client.project_id){
+                                fetch(`http://localhost:3000/delete-client-appartement/${client.client_id}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    }
+
+                                }).then(data => data.json)
+                                .then(function(result){
+                                    console.log(result.msg);
+                                })
+                                .catch((error)=>{console.log(error)});
+                            }
+                            fetch(`http://localhost:3000/update-client/${client.client_id}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    nom: nom,
+                                    prenom: prenom,
+                                    telephone: telephone,
+                                    adresse: adresse,
+                                    projet: projet,
+                                    type: type,
+                                })
+                            }).then(response => response.json())
+                                .then(data => {
+                                    alert("Client modifié")
+                                    window.location.reload()
+                                })
+                        })
+
+
                     })
+
 
 
                     tr.appendChild(icon);
@@ -333,6 +532,7 @@
                     tr.appendChild(email);
                     tr.appendChild(date);
                     tr.appendChild(button);
+                    tr.appendChild(buttonEdit);
 
 
                     let tr2 = document.createElement('tr')
@@ -402,6 +602,15 @@
                 });
             })
             .catch(err => console.log(err));
+
+        function setSelectedIndex(s, v) {
+            for (var i = 0; i < s.length; i++) {
+                if (s[i].value == v) {
+                    s.options[i].selected = true;
+                    return;
+                }
+            }
+        }
     </script>
 </body>
 

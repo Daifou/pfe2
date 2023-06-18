@@ -318,15 +318,7 @@ app.put('/pending-project/:id', (req, res)=>{
 });
 
 app.get('/get-client/:id', (req, res)=>{
-    let sql = `SELECT client_nom,
-        client_prenom,      
-        client_phone,
-        client_adresse,
-        client_type,
-        project_name,
-        client_id,
-        etape_versement,
-        date
+    let sql = `SELECT *
         FROM client C, users U, project P
         WHERE C.user_id = U.id
         AND C.project_id = P.project_id
@@ -702,6 +694,34 @@ app.delete('/delete-client/:id', (req, res)=>{
 
 });
 
+app.put('/delete-client-appartement/:id', (req, res)=>{
+    
+
+    let sql4 = `UPDATE appartement SET purchased_by = NULL, prix_total = 0, prix_reste = 0, etape_index = 0, surface = 0, lot = '0', chambre = '0' WHERE purchased_by='${req.params.id}'`;
+    let query4 = db.query(sql4, (err, result) => {
+        if(err) throw err;
+    })
+
+    res.json({msg: 'success'});
+
+
+
+});
+
+app.put('/update-client/:id', (req, res)=>{
+    let sql = `UPDATE client SET client_nom = '${req.body.nom}',
+                client_prenom = '${req.body.prenom}',
+                client_phone = '${req.body.telephone}',
+                client_adresse = '${req.body.adresse}',
+                project_id = '${req.body.projet}',
+                client_type = '${req.body.type}',
+                etape_versement = 0 WHERE client_id = '${req.params.id}'`;
+
+    let query = db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.json(result);
+    })
+});
 
 app.post('/is-exist-name', (req, res)=>{
     let sql = `SELECT * FROM project WHERE project_name = '${req.body.name}'`;
@@ -712,7 +732,7 @@ app.post('/is-exist-name', (req, res)=>{
         else
             res.json({exist: false});
     })
-})
+});
 
 
     
